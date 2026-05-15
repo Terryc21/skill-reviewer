@@ -1,0 +1,22 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "skill-reviewer",
+  "description": "Use when reviewing a Claude Code skill, auditing skill quality, or checking whether a skill is ready to publish. Produces structured reports with severity-rated findings, file:line citations, ranked recommended actions, and an optional second-opinion reconciliation pass. Supports lens variants (safety, discoverability, architecture, parseability, tests, quick) for focused reviews.",
+  "owner": {
+    "name": "Terry Nyberg"
+  },
+  "plugins": [
+    {
+      "name": "skill-reviewer",
+      "version": "0.1.0",
+      "source": "./",
+      "description": "Use when reviewing a Claude Code skill, auditing skill quality, or checking whether a skill is ready to publish. Produces structured reports with severity-rated findings, file:line citations, ranked recommended actions, and an optional second-opinion reconciliation pass. Supports lens variants (safety, discoverability, architecture, parseability, tests, quick) for focused reviews.",
+      "author": {
+        "name": "Terry Nyberg"
+      },
+      "homepage": "https://github.com/Terryc21/skill-reviewer",
+      "license": "Apache-2.0",
+      "category": "developer-tools"
+    }
+  ]
+}
