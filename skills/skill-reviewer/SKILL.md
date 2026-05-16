@@ -1,13 +1,7 @@
 ---
 name: skill-reviewer
-version: 0.2.0
-description: |
-  Use when reviewing a Claude Code skill, auditing skill quality, checking
-  whether a skill is ready to publish, or asking "is this skill any good?"
-  Produces a structured report with severity-rated findings, file:line
-  citations, ranked recommended actions, and an optional second-opinion
-  reconciliation pass. Supports lens variants (safety, discoverability,
-  architecture, parseability, tests, quick) for focused reviews.
+version: 0.2.1
+description: Use when reviewing a Claude Code skill, auditing skill quality before publish, or asking "is this skill any good?". Produces structured reports with file:line citations, severity-rated findings, ranked actions, and an optional second-opinion pass. Lens variants: safety, discoverability, architecture, parseability, tests, quick.
 license: Apache-2.0
 ---
 

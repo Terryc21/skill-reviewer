@@ -23,7 +23,7 @@ Lenses shorten or reorder sections — see `reference/lenses.md` for per-lens sp
 
 ### 1. TL;DR
 
-One paragraph (3-6 sentences) headline verdict, followed by a short list of 3-5 **weakness clusters** — the themes the findings group into.
+One paragraph (3-6 sentences) headline verdict, followed by a **mandatory severity legend**, followed by a short list of 3-5 **weakness clusters** (the themes the findings group into).
 
 Format:
 
@@ -32,11 +32,15 @@ Format:
 
 <paragraph: what kind of skill this is, the overall verdict, the standout strength, the most concerning weakness>
 
+**Severity:** 🔴 fix before publishing · 🟡 fix before next release · 🟢 polish · ⚪ skip · 🟠 strength
+
 **Weakness clusters:**
 1. <theme> — <one-sentence summary>
 2. <theme> — <one-sentence summary>
 ...
 ```
+
+The **Severity legend MUST appear** after the TL;DR paragraph and before the weakness-clusters list, in every report regardless of lens. It is a fixed-string, single-line legend. Do not paraphrase, expand, or reorder the entries. First-time readers need it to interpret the severity colors used in every finding below.
 
 If `--second-opinion` was used, the TL;DR's first line is:
 
@@ -133,6 +137,12 @@ How to validate any change the author makes:
 - For plugin skills: how to re-test install (`/plugin install` flow)
 
 Aim for 100-200 words.
+
+End the Verification section with a **Next step** closer that names the feedback loop:
+
+> **Next step:** fix the top-3 ✅ quick-wins from the Recommended Actions table, re-run skill-reviewer, watch the finding count drop. That's the loop.
+
+This is mandatory in every report regardless of lens. First-time readers need an explicit "what now?" so they don't put the report down without acting on it.
 
 ### 8. Files referenced
 

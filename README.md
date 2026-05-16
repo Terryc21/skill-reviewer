@@ -179,7 +179,7 @@ Things this skill **won't** accept:
 
 ## Maturity
 
-v0.2.0. Two release cycles in. Used on real skills, including itself. Open questions and v0.3+ candidates documented in `docs/DESIGN.md`.
+v0.2.1. Three release cycles in. Used on real skills, including itself. Open questions and v0.3+ candidates documented in `docs/DESIGN.md`.
 
 ## License
 
