@@ -2,116 +2,17 @@
 
 > **Candid reviews of Claude Code skills. File:line citations. Ranked actions. No filler.**
 
-A Claude Code skill that reviews other skills. Produces structured reports with severity-rated findings, citations to specific lines, ranked recommended actions, and an optional second-opinion reconciliation pass.
+You built a skill. You want feedback. You ask a friend.
 
-Built because polite-by-default reviews ship skills with quiet flaws.
+Your friend says: "Looks great! Maybe consider adding tests?"
 
-## TL;DR
+That's not a review. That's a hug.
 
-- **Problem:** Skill reviews tend toward hedged generic feedback ("consider adding tests," "you might think about discoverability"). Authors can't act on it.
-- **Solution:** A protocol that requires file:line citations for every claim, balances strengths and weaknesses, tags quick wins, and supports lens variants for focused audits.
-- **Install:** two `/plugin` commands in Claude Code (below). Skill becomes available as `/skill-reviewer` in any session.
-- **Use:** `/skill-reviewer review <path>` for a full review. `/skill-reviewer summary <path>` for a 5-minute sanity check.
-- **Lenses:** focused reviews via `--lens=safety`, `--lens=discoverability`, `--lens=architecture`, `--lens=parseability`, `--lens=tests`, or `--lens=quick`.
-- **Second opinion:** `--second-opinion` dispatches an independent reviewer to challenge the draft's top conclusions.
-- **Maturity:** v0.2.0. Extracted from a real review session reviewing the `unforget` skill; iterated through self-review cycles. See `skills/skill-reviewer/examples/sample-report-unforget.md` for canonical output.
+`skill-reviewer` is a Claude Code skill that reviews other skills the way you'd want them reviewed if shipping mattered. It reads every file, cites specific lines, and separates strengths from weaknesses. (You need both. Reviews that only list problems tell you what to change but not what to keep.) It ranks fixes by effort and severity so you can pick the quick wins first, and it refuses to hedge. If something is fragile, it'll say so. If something is unusually well-done, it'll say that too.
 
-## Install
+## A real fragment
 
-Run these two commands **one at a time** in Claude Code. Wait for Step 1 to confirm "Successfully added marketplace" before running Step 2.
-
-Step 1 — add the marketplace:
-
-```
-/plugin marketplace add Terryc21/skill-reviewer
-```
-
-Step 2 — install the plugin:
-
-```
-/plugin install skill-reviewer@skill-reviewer
-```
-
-The skill is now available. To verify, type `/skill-reviewer --version` in any session.
-
-<details>
-<summary><strong>Why two separate commands?</strong></summary>
-
-If you copy both `/plugin` lines at once and paste them into Claude Code, the slash-command dispatcher treats the first `/plugin` as the command and the rest of the paste as its arguments. Run them one at a time.
-</details>
-
-<details>
-<summary><strong>Manual install (fallback)</strong></summary>
-
-If the plugin path isn't available in your environment:
-
-```bash
-mkdir -p ~/.claude/skills
-git clone https://github.com/Terryc21/skill-reviewer.git ~/.claude/skills/skill-reviewer
-```
-
-Then invoke as `/skill skill-reviewer` (with the prefix). To update later: `cd ~/.claude/skills/skill-reviewer && git pull`.
-</details>
-
-## Quick start
-
-In any Claude Code session, point at a skill directory:
-
-```
-/skill-reviewer review /path/to/some-skill
-```
-
-A full review takes 2-5 minutes depending on the skill's size. Output is a structured markdown report.
-
-For a 5-minute sanity check instead:
-
-```
-/skill-reviewer summary /path/to/some-skill
-```
-
-For a focused review of one concern:
-
-```
-/skill-reviewer review /path/to/some-skill --lens=safety
-```
-
-For a pre-publication audit:
-
-```
-/skill-reviewer review /path/to/some-skill --second-opinion
-```
-
-## Subcommand reference
-
-The canonical subcommand surface lives in [`skills/skill-reviewer/SKILL.md`](skills/skill-reviewer/SKILL.md#subcommand-surface) (which is what Claude Code loads when invoking `/skill-reviewer`). Brief tour below:
-
-- `/skill-reviewer review <path>` — full review of one skill (default lens is `full`)
-- `/skill-reviewer review <path> --lens=<name>` — focused review (7 lenses; see lens variants below)
-- `/skill-reviewer review <path> --second-opinion` — full review + independent challenger pass on the top 3 conclusions
-- `/skill-reviewer summary <path>` — equivalent to `review --lens=quick`; ~800 words
-- `/skill-reviewer lenses` — print the lens catalog
-- `/skill-reviewer detect <path>` — classify the skill (single-file / thin-index / plugin) without reviewing
-- `/skill-reviewer --version` — print version, install path, and lens names
-
-## Lens variants
-
-A lens narrows the review to one concern. Use a lens when you want depth in one area instead of breadth across all areas.
-
-| Lens | Focus | Best for |
-|---|---|---|
-| `full` (default) | Everything | First review or comprehensive pre-publication audit |
-| `discoverability` | Trigger phrases, manifest descriptions, README clarity, install UX | "Will users find this and trigger it correctly?" |
-| `safety` | Destructive operations, backups, recovery, error handling, forward-compat | Skills that delete data, modify state, or run destructive ops |
-| `architecture` | File structure, single source of truth, redundancy, cross-file refs | Skills with >5 reference files or onboarding contributors |
-| `parseability` | Output formats, canonical schemas, regex provided where needed, machine-readable export | Skills whose output is consumed by other tools |
-| `tests` | What's tested, what's silently untested, destructive-helper coverage | Skills with helper scripts |
-| `quick` | TL;DR + top 5 strengths + top 5 weaknesses + top 5 actions | Triage |
-
-Full lens specs in `skills/skill-reviewer/reference/lenses.md`.
-
-## See it first
-
-Excerpt from [`skills/skill-reviewer/examples/sample-report-unforget.md`](skills/skill-reviewer/examples/sample-report-unforget.md):
+This is the top of a real review (skill-reviewer reviewing the `unforget` skill). It's the kind of output you'll get on your own work:
 
 ```markdown
 ## TL;DR
@@ -120,11 +21,11 @@ Excerpt from [`skills/skill-reviewer/examples/sample-report-unforget.md`](skills
 structured UNFORGET.md per project. It's more disciplined than most skills
 I've reviewed: thin SKILL.md → fat reference files, deterministic Python
 helpers with prose fallbacks, backups before destructive operations, and the
-**verify-still-open recipe** is a genuinely original idea worth generalizing.
+verify-still-open recipe is a genuinely original idea worth generalizing.
 The standout strength is structural; the standout weakness is that the
 canonical example never demonstrates the project's signature feature.
 
-**Weakness clusters:**
+Weakness clusters:
 1. Tooling and parseability gaps — Compact preset has no canonical regex
 2. Discoverability — natural-language trigger phrases buried in YAML
 3. Test coverage — Surface 6 and prune_backups.py are explicitly untested
@@ -132,57 +33,145 @@ canonical example never demonstrates the project's signature feature.
 5. Under-specified fallbacks — "fail-soft" and Python-missing triggers vague
 ```
 
-Notice: file:line citations are required, severity colors are explicit, and the report calls out strengths as concretely as weaknesses. The full report continues with per-file findings, cross-file analysis, a ranked actions table, and verification instructions.
+Notice what's there: file paths, named gaps, specific patterns. Notice what's not: "great work overall," "minor improvements possible," "consider thinking about." The full report (preserved at [`skills/skill-reviewer/examples/sample-report-unforget.md`](skills/skill-reviewer/examples/sample-report-unforget.md)) continues with per-file findings, a ranked actions table, and verification steps for each fix.
 
-## When to use skill-reviewer (and when not)
+## Install
 
-**Use skill-reviewer when:**
+Two commands in any Claude Code session, **one at a time**. Paste both at once and the second gets eaten as arguments to the first. Ask me how I know:
 
-- You've built a skill and want honest feedback before publishing
-- You're reviewing someone else's skill and want a structured approach
-- You're auditing a skill's safety, discoverability, or test coverage specifically
-- You want a second-opinion pass to challenge your own first impressions
+```
+/plugin marketplace add Terryc21/skill-reviewer
+```
 
-**Don't use skill-reviewer when:**
+Wait for "Successfully added marketplace," then:
 
-- You want auto-generated edits (skill-reviewer produces reports, not patches)
-- You want a single grade or score (multi-axis findings are the point)
-- You're reviewing something that isn't a skill (the detection step will refuse with `--force` available as override)
+```
+/plugin install skill-reviewer@skill-reviewer
+```
 
-## How it works with other tools
+Verify with `/skill-reviewer --version`. You should see three lines: version, install path, and the list of available lenses.
 
-- **`unforget`** — track skill-reviewer findings you defer (e.g., "fix in v0.3") as rows in Section 3 (Audit findings) of an UNFORGET.md.
-- **`radar-suite`** — audit findings from radar-suite can feed into a skill-reviewer report's per-file findings if the skill under review uses radar-suite output formats.
-- **`bug-echo`** — after fixing one finding, bug-echo can sweep for similar patterns across the skill.
+<details>
+<summary><strong>Manual install if the plugin path isn't available</strong></summary>
+
+```bash
+mkdir -p ~/.claude/skills
+git clone https://github.com/Terryc21/skill-reviewer.git ~/.claude/skills/skill-reviewer
+```
+
+Invoke as `/skill skill-reviewer` (with the prefix). Update later with `cd ~/.claude/skills/skill-reviewer && git pull`.
+
+</details>
+
+## Your first review
+
+Point it at a skill directory:
+
+```
+/skill-reviewer review /path/to/some-skill
+```
+
+Two to five minutes later you get a structured markdown report. Per-file findings, cross-file consistency checks, a ranked actions table with severity colors and effort estimates, and a verification section telling you how to test each fix.
+
+If you want a 5-minute sanity check instead of the full audit:
+
+```
+/skill-reviewer summary /path/to/some-skill
+```
+
+That gives you the headline verdict, the top 5 strengths, the top 5 weaknesses, and the top 5 actions. Roughly 800 words. Useful when you're deciding whether to commit to a full review or just spot-check.
+
+## When you'd use this
+
+- **You finished a skill** and want honest feedback before publishing it on GitHub or a marketplace.
+- **You're auditing someone else's skill** and don't want to invent a review structure from scratch.
+- **You're about to merge a big PR to a skill** and want a structured pre-merge audit.
+- **You suspect your own review is too kind** (or too harsh) and want a second-opinion pass to challenge your top conclusions.
+
+The skill is designed for the moment when you've stared at your own work for too long and can't see what's missing.
+
+## Lenses (focused reviews)
+
+A lens narrows the audit to one concern. Use them when you don't need a full audit. You just want to ask one specific question.
+
+```
+/skill-reviewer review /path/to/skill --lens=safety
+```
+
+| Lens | What it asks |
+|---|---|
+| `full` (default) | Everything below, plus the cross-file checks |
+| `quick` | Just give me the headline: TL;DR + top 5 strengths + top 5 weaknesses |
+| `discoverability` | Will users find this and trigger it correctly? Are activation phrases buried? |
+| `safety` | Does this skill back up before destructive operations? Recover from failures? |
+| `architecture` | Is the file structure coherent? Are there duplicate sources of truth? |
+| `parseability` | Can downstream tools consume the skill's output reliably? |
+| `tests` | What's tested, what's silently untested, what's explicitly untested? |
+
+A full lens reference (focus list + skip list per lens) lives in [`skills/skill-reviewer/reference/lenses.md`](skills/skill-reviewer/reference/lenses.md).
+
+## Second opinion (for higher stakes)
+
+When you're about to publish something public, add `--second-opinion`:
+
+```
+/skill-reviewer review /path/to/skill --second-opinion
+```
+
+That runs the full review, then dispatches an independent reviewer to challenge the top 3 conclusions. The challenger reads the cited files themselves. (They can't just trust the draft's quotes.) The final report has a "Second-opinion reconciliation" section showing what changed between draft and final. Roughly doubles review time. Worth it before public releases; overkill for routine pre-commit checks.
+
+## What it deliberately doesn't do
+
+`skill-reviewer` is opinionated about what it won't be:
+
+- **It doesn't auto-fix anything.** Reports go to you; you decide what to act on. (If you want an auto-fix tool, that's a different tool, and probably a more dangerous one.)
+- **It doesn't give a single grade.** No "B+ skill" or "8/10." A multi-axis review tells you specifically what's good and what's not. A grade hides the dimensions.
+- **It doesn't compare to a "best skill" template.** Skills have legitimate stylistic variation. Imposing uniformity is worse than the variation it removes.
+- **It doesn't chain three reviewers.** `--second-opinion` is one challenger. Three reviewers don't add proportional value; if the first pair strongly disagrees, that's signal you need a human tiebreaker, not another LLM.
+
+## How it works with sibling skills
+
+- **[`unforget`](https://github.com/Terryc21/unforget)**: log deferred findings from a review as rows in your project's UNFORGET.md so they don't get lost between releases.
+- **[`radar-suite`](https://github.com/Terryc21/radar-suite)**: if you're auditing a skill that wraps radar-suite output, the formats interoperate.
+- **[`bug-echo`](https://github.com/Terryc21/bug-echo)**: after fixing one finding, sweep for similar patterns elsewhere in the same skill.
 
 ## Self-review
 
-skill-reviewer can review itself:
+The skill can audit itself, which is the kind of self-aware feature most tools avoid because it sometimes lands honestly:
 
 ```
 /skill-reviewer review /Volumes/2 TB Drive/Coding/GitHub/skill-reviewer
 ```
 
-Findings should be specific to this skill — gaps in its own protocol or lens definitions. Use this as a sanity check after any meaningful edit to the reference files.
+A healthy self-review surfaces findings already named in `docs/DESIGN.md` § Open design questions (those are known gaps) plus possibly new MEDIUM/LOW findings. A new CRITICAL or HIGH finding *not* in known-gaps blocks the next release until it's resolved or moved into known-gaps with a target version. Run this after any meaningful edit to the reference files.
 
 ## Origin
 
-skill-reviewer was extracted from a Claude Code session reviewing the `unforget` skill. The user wanted candid feedback with file:line citations and ranked actions. After producing the review, they asked for a reusable prompt; after using the prompt, they asked to turn it into a skill. That review is preserved in `skills/skill-reviewer/examples/sample-report-unforget.md`.
+`skill-reviewer` was extracted from a real Claude Code session: the user asked Claude to review the `unforget` skill, Claude produced a detailed candid review, the user asked for the same analysis as a reusable prompt, then asked to turn the prompt into a skill. Each step generated something useful; the final step turned implicit knowledge into a reusable tool. The original review is preserved at [`skills/skill-reviewer/examples/sample-report-unforget.md`](skills/skill-reviewer/examples/sample-report-unforget.md).
+
+This skill is therefore a literal artifact of using Claude Code well.
 
 ## Contributing
 
 Pull requests welcome for:
 
-- Additional lens variants (with focus + skip lists)
+- Additional lens variants (with focus + skip lists per the spec in `docs/DESIGN.md`)
 - Refinements to the severity rubric (effort buckets, quick-win tag rules)
-- Refinements to the protocol (new cross-file checks worth standardizing)
-- Examples of reports for differently-shaped skills (single-file, plugin)
+- New cross-file checks worth standardizing
+- Canonical examples for single-file and thin-index shapes (the only existing example is plugin-shape)
 
 Things this skill **won't** accept:
 
 - Auto-fix or auto-edit functionality
 - Single-number grading
 - "Best skill" template comparisons
+- Three-or-more reviewer chains
+
+`docs/DESIGN.md` has the full contributor guide, including the cross-file invariants you need to respect when editing reference files.
+
+## Maturity
+
+v0.2.0. Two release cycles in. Used on real skills, including itself. Open questions and v0.3+ candidates documented in `docs/DESIGN.md`.
 
 ## License
 
