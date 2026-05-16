@@ -1,6 +1,6 @@
 ---
 name: skill-reviewer
-version: 0.1.0
+version: 0.1.1
 description: |
   Use when reviewing a Claude Code skill, auditing skill quality, checking
   whether a skill is ready to publish, or asking "is this skill any good?"

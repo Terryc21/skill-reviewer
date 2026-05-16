@@ -40,7 +40,7 @@ The closest things to tests we could write:
 Both are useful and may justify a `tests/` directory later. Until then, the validation strategy is:
 
 1. Self-review after meaningful edits (described in README.md and SKILL.md)
-2. Sample report comparison (`examples/sample-report-unforget.md` is the canonical reference)
+2. Sample report comparison (`skills/skill-reviewer/examples/sample-report-unforget.md` is the canonical reference)
 3. Manual review of a new lens by running it against `unforget` and confirming the output matches the lens's stated focus and skip lists
 
 ---
@@ -50,9 +50,9 @@ Both are useful and may justify a `tests/` directory later. Until then, the vali
 1. **Identify the concern.** Is it covered by an existing lens? Don't duplicate — expand instead.
 2. **Write a focus list.** Which sections of `protocol.md` does this lens apply?
 3. **Write a skip list.** Which sections should this lens explicitly skip?
-4. **Set a target report length range** (in `reference/lenses.md`'s table at the top).
-5. **Add a spec subsection to `reference/lenses.md`** with the focus list, skip list, and a "Use when" guideline.
-6. **Update `reference/output-format.md`** if the new lens needs a non-standard report structure (most won't).
+4. **Set a target report length range** (in `skills/skill-reviewer/reference/lenses.md`'s table at the top).
+5. **Add a spec subsection to `skills/skill-reviewer/reference/lenses.md`** with the focus list, skip list, and a "Use when" guideline.
+6. **Update `skills/skill-reviewer/reference/output-format.md`** if the new lens needs a non-standard report structure (most won't).
 7. **Update the lens table in `README.md` and `SKILL.md`** to keep the user-facing surface in sync.
 8. **Run the new lens against a real skill** to verify the output makes sense.
 
@@ -68,9 +68,9 @@ The thin-index architecture only works if these invariants hold:
 
 1. **`plugin.json` and `marketplace.json` descriptions match exactly.** (Lesson from the `unforget` review.) Both files should have the same activation-phrase guidance. Use the same description block for both.
 2. **SKILL.md frontmatter `description` is verb-first.** Starts with "Use when…" so Claude Code's router has a clear hook. Trigger phrases go in the first sentence, not buried in YAML multi-line.
-3. **Every reference file is independently readable.** A reader who jumps to `reference/lenses.md` without reading SKILL.md first should still understand what a lens is.
-4. **Cross-file references use stable anchors.** Prefer `reference/severity-rubric.md § Effort definitions` over `reference/severity-rubric.md:42`. Line numbers drift; section names don't.
-5. **Examples conform to the spec.** `examples/sample-report-unforget.md` uses the severity rubric and the output format exactly as specified. If you change the spec, update the example.
+3. **Every reference file is independently readable.** A reader who jumps to `skills/skill-reviewer/reference/lenses.md` without reading SKILL.md first should still understand what a lens is.
+4. **Cross-file references use stable anchors.** Prefer `skills/skill-reviewer/reference/severity-rubric.md § Effort definitions` over `skills/skill-reviewer/reference/severity-rubric.md:42`. Line numbers drift; section names don't.
+5. **Examples conform to the spec.** `skills/skill-reviewer/examples/sample-report-unforget.md` uses the severity rubric and the output format exactly as specified. If you change the spec, update the example.
 6. **No duplicate sources of truth.** If a definition appears in two reference files, one is canonical and the other refers to it. Don't restate.
 
 When in doubt: run `/skill-reviewer review` on this repo and act on the findings.
@@ -105,7 +105,7 @@ These haven't been settled. If you have opinions, file an issue or propose a PR.
 skill-reviewer was extracted from a single Claude Code session in May 2026:
 
 1. User asked Claude to review the `unforget` skill (a sibling project)
-2. Claude produced a detailed review (preserved as `examples/sample-report-unforget.md`)
+2. Claude produced a detailed review (preserved as `skills/skill-reviewer/examples/sample-report-unforget.md`)
 3. User asked for a reusable prompt to run the same analysis on any skill
 4. Claude wrote a self-contained prompt
 5. User asked to turn the prompt into a skill

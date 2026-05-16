@@ -14,7 +14,7 @@ Built because polite-by-default reviews ship skills with quiet flaws.
 - **Use:** `/skill-reviewer review <path>` for a full review. `/skill-reviewer summary <path>` for a 5-minute sanity check.
 - **Lenses:** focused reviews via `--lens=safety`, `--lens=discoverability`, `--lens=architecture`, `--lens=parseability`, `--lens=tests`, or `--lens=quick`.
 - **Second opinion:** `--second-opinion` dispatches an independent reviewer to challenge the draft's top conclusions.
-- **Maturity:** v0.1.0. Extracted from a real review session reviewing the `unforget` skill. See `examples/sample-report-unforget.md` for canonical output.
+- **Maturity:** v0.1.0. Extracted from a real review session reviewing the `unforget` skill. See `skills/skill-reviewer/examples/sample-report-unforget.md` for canonical output.
 
 ## Install
 
@@ -108,11 +108,11 @@ A lens narrows the review to one concern. Use a lens when you want depth in one 
 | `tests` | What's tested, what's silently untested, destructive-helper coverage | Skills with helper scripts |
 | `quick` | TL;DR + top 5 strengths + top 5 weaknesses + top 5 actions | Triage |
 
-Full lens specs in `reference/lenses.md`.
+Full lens specs in `skills/skill-reviewer/reference/lenses.md`.
 
 ## See it first
 
-Excerpt from [`examples/sample-report-unforget.md`](examples/sample-report-unforget.md):
+Excerpt from [`skills/skill-reviewer/examples/sample-report-unforget.md`](skills/skill-reviewer/examples/sample-report-unforget.md):
 
 ```markdown
 ## TL;DR
@@ -169,7 +169,7 @@ Findings should be specific to this skill — gaps in its own protocol or lens d
 
 ## Origin
 
-skill-reviewer was extracted from a Claude Code session reviewing the `unforget` skill. The user wanted candid feedback with file:line citations and ranked actions. After producing the review, they asked for a reusable prompt; after using the prompt, they asked to turn it into a skill. That review is preserved in `examples/sample-report-unforget.md`.
+skill-reviewer was extracted from a Claude Code session reviewing the `unforget` skill. The user wanted candid feedback with file:line citations and ranked actions. After producing the review, they asked for a reusable prompt; after using the prompt, they asked to turn it into a skill. That review is preserved in `skills/skill-reviewer/examples/sample-report-unforget.md`.
 
 ## Contributing
 
