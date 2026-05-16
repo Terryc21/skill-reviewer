@@ -1,6 +1,6 @@
 # skill-reviewer
 
-> **Built on Anthropic's [Claude Code Skills architecture](https://docs.anthropic.com/en/docs/claude-code/skills). A reviewer for the skills you write on that foundation.**
+> **Based on Anthropic's [Claude Code Skills architecture](https://docs.anthropic.com/en/docs/claude-code/skills). A reviewer for the skills you write on that foundation.**
 
 You built a skill. You want feedback. You ask a friend.
 
