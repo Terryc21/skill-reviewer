@@ -135,6 +135,14 @@ That runs the full review, then dispatches an independent reviewer to challenge 
 - **[`radar-suite`](https://github.com/Terryc21/radar-suite)**: if you're auditing a skill that wraps radar-suite output, the formats interoperate.
 - **[`bug-echo`](https://github.com/Terryc21/bug-echo)**: after fixing one finding, sweep for similar patterns elsewhere in the same skill.
 
+## Other skills by the same author
+
+No direct integration with skill-reviewer, but worth knowing about if you're building skills:
+
+- **[`prompter`](https://github.com/Terryc21/prompter)**: intercepts your prompts before Claude Code acts on them, evaluates whether rewriting would meaningfully improve them, and shows you the rewrite for approval. Over time it teaches you what makes prompts effective.
+- **[`tutorial-creator`](https://github.com/Terryc21/tutorial-creator)**: generate annotated code-reading tutorials from your own codebase. Three surfaces (tutorial generation, vocabulary management, learning-state inspection). Useful for writing-to-learn or producing audience-facing technical content.
+- **[`workflow-audit`](https://github.com/Terryc21/workflow-audit)**: multi-layer behavioral audit of SwiftUI user workflows. Finds dead ends, broken promises, missing empty/loading/error states, and other UX defects that grep-style audits miss.
+
 ## Self-review
 
 The skill can audit itself, which is the kind of self-aware feature most tools avoid because it sometimes lands honestly:
