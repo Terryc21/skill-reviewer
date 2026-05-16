@@ -43,6 +43,24 @@ Both are useful and may justify a `tests/` directory later. Until then, the vali
 2. Sample report comparison (`skills/skill-reviewer/examples/sample-report-unforget.md` is the canonical reference)
 3. Manual review of a new lens by running it against `unforget` and confirming the output matches the lens's stated focus and skip lists
 
+### Self-review acceptance criteria
+
+A self-review (running `/skill-reviewer review` on skill-reviewer itself) is **healthy** if all of:
+
+1. Every CRITICAL and HIGH finding it surfaces is **already named** in `## Open design questions` below, OR is a structural drift the reviewer can fix in one commit (a dangling reference, a sub-command-table mismatch, a section that exists in one file but is referenced from another).
+2. MEDIUM and LOW findings can be deferred; surfacing them is informational, not blocking.
+3. The reviewer can fill in `## Files referenced` cleanly — every file cited in the report exists at the cited path.
+
+A self-review is **alarming** (blocks release until resolved) if:
+
+- A CRITICAL or HIGH finding describes a gap NOT named in `## Open design questions` AND NOT fixable in one commit, OR
+- The reviewer cannot run the full protocol because a required reference file is missing or contradicts itself, OR
+- The reviewer surfaces a prompt-injection attempt against itself (extreme edge case; would mean a contributor planted text directed at future reviewers).
+
+When alarmed: triage. Either move the surprising finding into `## Open design questions` with a v0.X target and ship anyway, or fix the underlying issue and re-run the self-review.
+
+The self-review is reviewer-dependent — two different LLM sessions will produce different reports. The acceptance criterion is therefore about **finding categories, not exact finding lists**.
+
 ---
 
 ## How to add a new lens
@@ -92,10 +110,10 @@ When in doubt: run `/skill-reviewer review` on this repo and act on the findings
 
 These haven't been settled. If you have opinions, file an issue or propose a PR.
 
-1. **Should `compare <path1> <path2>` produce one merged report or two parallel reports with a synthesis section?** Currently the spec implies one merged report. The alternative is cleaner for cross-skill diff use cases.
+1. **`compare <path1> <path2>` deferred from v0.2 (removed from surface).** The subcommand was listed in v0.1 but never spec'd — no `protocol.md § Compare mode` section ever existed. Removed in v0.2 pending real demand. Open shape questions if it returns in v0.3+: one merged report vs two parallel + synthesis; how to handle stylistic variations that aren't bugs; whether the lens variants apply per-skill or to the comparison as a whole.
 2. **Should `detect` output be machine-readable (JSON) in addition to human-readable markdown?** Useful for CI integration but adds a parseability commitment.
 3. **Should there be a `--include` / `--exclude` flag to scope the review to specific files?** Useful when a skill is huge but you only want to audit one subsystem. Adds complexity to the protocol.
-4. **Should the second-opinion subagent be configurable (Plan vs Explore vs general-purpose)?** Currently spec'd as Plan. Other subagent types might produce different challenger styles.
+4. **Should the second-opinion subagent be configurable (Plan vs Explore vs general-purpose)?** **Decided for v0.2: Plan-type only**, per `skills/skill-reviewer/reference/second-opinion.md:36`. Reopen if evidence accumulates that Plan-type produces consistently miscalibrated challenger reports for specific skill shapes. Until then, this is closed in the spec but tracked here as a known constraint.
 5. **Should reports include a recommended next-review date based on how much the skill has changed?** Useful for ongoing maintenance audits, but requires tracking review history somewhere.
 
 ---

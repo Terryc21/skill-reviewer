@@ -10,15 +10,17 @@ If no `--lens` flag is provided, the default is `full`.
 
 ## Available lenses
 
-| Lens | Focus | Skip | Report length |
-|---|---|---|---|
-| `full` | Everything in `protocol.md` | — | ~2500-4000 words |
-| `discoverability` | Trigger phrases, manifest descriptions, README clarity, install UX, activation paths | Test coverage, parseability, internal architecture | ~1200-1800 words |
-| `safety` | Destructive operations, backups, recovery, error handling, fail-soft, forward-compat | Trigger phrasing, README, parseability | ~1500-2200 words |
-| `architecture` | File structure, single-source-of-truth, spec-substitution discipline, redundancy, cross-file refs | Trigger phrasing, install UX | ~1500-2200 words |
-| `parseability` | Output formats, canonical schemas, regex provided where needed, machine-readable export | Discoverability, README narrative | ~1000-1500 words |
-| `tests` | What's tested, what's silently untested, coverage of destructive helpers, fixture quality | Trigger phrasing, README, parseability | ~1000-1500 words |
-| `quick` | TL;DR + top 5 strengths + top 5 weaknesses + top 5 recommended actions | Per-file detail, cross-file analysis, verification | ~600-1000 words |
+| Lens | Focus | Skip |
+|---|---|---|
+| `full` | Everything in `protocol.md` | — |
+| `discoverability` | Trigger phrases, manifest descriptions, README clarity, install UX, activation paths | Test coverage, parseability, internal architecture |
+| `safety` | Destructive operations, backups, recovery, error handling, fail-soft, forward-compat | Trigger phrasing, README, parseability |
+| `architecture` | File structure, single-source-of-truth, spec-substitution discipline, redundancy, cross-file refs | Trigger phrasing, install UX |
+| `parseability` | Output formats, canonical schemas, regex provided where needed, machine-readable export | Discoverability, README narrative |
+| `tests` | What's tested, what's silently untested, coverage of destructive helpers, fixture quality | Trigger phrasing, README, parseability |
+| `quick` | TL;DR + top 5 strengths + top 5 weaknesses + top 5 recommended actions | Per-file detail, cross-file analysis, verification |
+
+**Word budgets** for each lens (target and hard cap) live in `reference/output-format.md` § Word budget by lens. That table is canonical; if you need length guidance, read it there.
 
 ---
 

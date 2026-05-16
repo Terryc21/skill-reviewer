@@ -84,7 +84,7 @@ If a path has `.claude-plugin/` but no `SKILL.md`, OR has `SKILL.md` but `.claud
 
 If a path contains multiple skills (e.g., a monorepo of plugins, each in its own subdirectory), refuse to run with:
 
-> "Multi-skill repo detected. Run `/skill-reviewer review <path>/<skill-name>` to review one skill at a time. Use `/skill-reviewer compare <path1> <path2>` to compare two of them."
+> "Multi-skill repo detected. Run `/skill-reviewer review <path>/<skill-name>` to review one skill at a time."
 
 Multi-skill repos require per-skill review with optional cross-skill comparison, not a single mashed-together report.
 

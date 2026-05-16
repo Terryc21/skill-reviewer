@@ -14,7 +14,7 @@ Built because polite-by-default reviews ship skills with quiet flaws.
 - **Use:** `/skill-reviewer review <path>` for a full review. `/skill-reviewer summary <path>` for a 5-minute sanity check.
 - **Lenses:** focused reviews via `--lens=safety`, `--lens=discoverability`, `--lens=architecture`, `--lens=parseability`, `--lens=tests`, or `--lens=quick`.
 - **Second opinion:** `--second-opinion` dispatches an independent reviewer to challenge the draft's top conclusions.
-- **Maturity:** v0.1.0. Extracted from a real review session reviewing the `unforget` skill. See `skills/skill-reviewer/examples/sample-report-unforget.md` for canonical output.
+- **Maturity:** v0.2.0. Extracted from a real review session reviewing the `unforget` skill; iterated through self-review cycles. See `skills/skill-reviewer/examples/sample-report-unforget.md` for canonical output.
 
 ## Install
 
@@ -83,16 +83,15 @@ For a pre-publication audit:
 
 ## Subcommand reference
 
-| Command | What it does |
-|---|---|
-| `/skill-reviewer review <path>` | Full review. Default lens is `full`. |
-| `/skill-reviewer review <path> --lens=<name>` | Focused review under a specific lens. |
-| `/skill-reviewer review <path> --second-opinion` | Full review followed by an independent reviewer pass that challenges the top 3 conclusions. |
-| `/skill-reviewer compare <path1> <path2>` | Side-by-side review of two skills. |
-| `/skill-reviewer summary <path>` | Equivalent to `review --lens=quick`. ~800 words. |
-| `/skill-reviewer lenses` | Print the lens catalog. |
-| `/skill-reviewer detect <path>` | Classify the skill (single-file / thin-index / plugin) without reviewing. |
-| `/skill-reviewer --version` | Print version and install path. |
+The canonical subcommand surface lives in [`skills/skill-reviewer/SKILL.md`](skills/skill-reviewer/SKILL.md#subcommand-surface) (which is what Claude Code loads when invoking `/skill-reviewer`). Brief tour below:
+
+- `/skill-reviewer review <path>` — full review of one skill (default lens is `full`)
+- `/skill-reviewer review <path> --lens=<name>` — focused review (7 lenses; see lens variants below)
+- `/skill-reviewer review <path> --second-opinion` — full review + independent challenger pass on the top 3 conclusions
+- `/skill-reviewer summary <path>` — equivalent to `review --lens=quick`; ~800 words
+- `/skill-reviewer lenses` — print the lens catalog
+- `/skill-reviewer detect <path>` — classify the skill (single-file / thin-index / plugin) without reviewing
+- `/skill-reviewer --version` — print version, install path, and lens names
 
 ## Lens variants
 
@@ -142,7 +141,6 @@ Notice: file:line citations are required, severity colors are explicit, and the 
 - You've built a skill and want honest feedback before publishing
 - You're reviewing someone else's skill and want a structured approach
 - You're auditing a skill's safety, discoverability, or test coverage specifically
-- You're comparing two skills to decide which patterns to keep
 - You want a second-opinion pass to challenge your own first impressions
 
 **Don't use skill-reviewer when:**

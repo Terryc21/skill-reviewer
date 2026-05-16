@@ -1,6 +1,6 @@
 ---
 name: skill-reviewer
-version: 0.1.1
+version: 0.2.0
 description: |
   Use when reviewing a Claude Code skill, auditing skill quality, checking
   whether a skill is ready to publish, or asking "is this skill any good?"
@@ -38,11 +38,10 @@ Three things distinguish a skill-reviewer report from generic feedback:
 | `/skill-reviewer review <path>` | Full review of one skill | `reference/protocol.md` |
 | `/skill-reviewer review <path> --lens=<name>` | Focused review under a lens | `reference/lenses.md` |
 | `/skill-reviewer review <path> --second-opinion` | Full review + reconciliation pass | `reference/second-opinion.md` |
-| `/skill-reviewer compare <path1> <path2>` | Side-by-side review of two skills | `reference/protocol.md` § Compare mode |
 | `/skill-reviewer summary <path>` | TL;DR + top 5 strengths + top 5 weaknesses only | `reference/lenses.md` (`quick` lens) |
 | `/skill-reviewer lenses` | List available lenses with descriptions | `reference/lenses.md` |
 | `/skill-reviewer detect <path>` | Classification only; print shape + recommended review depth | `reference/detection.md` |
-| `/skill-reviewer --version` | Print version, install path, supported lens names | n/a |
+| `/skill-reviewer --version` | Print version, install path, supported lens names | `reference/output-format.md` § `--version` output |
 
 ---
 
@@ -56,9 +55,9 @@ Three things distinguish a skill-reviewer report from generic feedback:
 - **Skill produces structured output for other tools** → `/skill-reviewer review <path> --lens=parseability`
 - **Skill has scripts/code with tests** → `/skill-reviewer review <path> --lens=tests`
 - **Asking "will users find this and trigger it correctly?"** → `/skill-reviewer review <path> --lens=discoverability`
-- **Comparing two skills** → `/skill-reviewer compare <path1> <path2>`
 - **Not sure what shape the skill is** → `/skill-reviewer detect <path>`
 - **Don't know what lenses exist** → `/skill-reviewer lenses`
+- **Path doesn't look like a skill but you want to review it anyway** → `/skill-reviewer review <path> --force` (bypasses detection refusal; see `reference/detection.md` for refusal conditions)
 
 ---
 
@@ -74,6 +73,7 @@ This SKILL.md is intentionally thin. The full spec is split across `reference/*.
 | `reference/second-opinion.md` | Second-opinion subagent workflow with reconciliation rules | Running `review --second-opinion` |
 | `reference/detection.md` | Skill-detection heuristics, classification, adaptive depth budgets, refusal patterns | Running `detect`, or any `review` invocation (detection runs implicitly first) |
 | `reference/output-format.md` | Report structure, section order, stylistic constraints, word budgets by lens | Producing any report |
+| `../../docs/DESIGN.md` | Contributor-onboarding doc: architecture rationale, cross-file invariants, open design questions, extension guidelines | Extending the skill, debating design decisions, onboarding to the codebase (not loaded during a review) |
 
 **Spec-substitution principle.** This SKILL.md is the index, not the spec. When implementing or modifying any subcommand, `Read` the linked reference file before acting. The reference files are authoritative. (This rule, and several others here, are lifted from the `unforget` skill — see `examples/sample-report-unforget.md` for the review that influenced this skill's architecture.)
 
@@ -90,7 +90,7 @@ This SKILL.md is intentionally thin. The full spec is split across `reference/*.
 - **Reviews any directory with SKILL.md or .claude-plugin/.** Detection rules in `reference/detection.md`.
 - **No language-specific dependencies.** The skill is LLM-driven; no Python, no scripts. Works on any skill regardless of the language its helpers are written in.
 - **Format-stable.** Reports use markdown tables and bullet lists. No proprietary format. Output can be pasted into GitHub, Linear, Slack, or any markdown viewer.
-- **Self-reviewable.** Run `/skill-reviewer review /path/to/skill-reviewer/` to audit this skill against its own protocol. Findings should match the spec.
+- **Self-reviewable.** Run `/skill-reviewer review /path/to/skill-reviewer/` to audit this skill against its own protocol. Acceptance: a healthy self-review surfaces findings already named in `docs/DESIGN.md § Open design questions` (those are known gaps) plus possibly new MEDIUM/LOW findings. A CRITICAL or HIGH finding NOT already in known-gaps blocks release until resolved or moved to known-gaps with a v0.X target.
 
 ---
 

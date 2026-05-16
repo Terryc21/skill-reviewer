@@ -1,6 +1,6 @@
 # Output format
 
-Authoritative spec for the structure of every skill-reviewer report. Applies to all subcommands except `lenses`, `detect`, and `--version` (which have their own short outputs).
+Authoritative spec for the structure of every skill-reviewer report. Applies to all subcommands except `lenses`, `detect`, and `--version` (which have their own short outputs — see `--version` output below).
 
 ---
 
@@ -182,10 +182,32 @@ If you're about to exceed the hard cap, stop and ask whether you've drifted into
 
 ---
 
+## `--version` output
+
+`/skill-reviewer --version` emits a short fixed-format diagnostic. Three sections, plain text, no markdown:
+
+```
+skill-reviewer <version> (<install path>)
+Lenses: full, discoverability, safety, architecture, parseability, tests, quick
+Subcommands: review, summary, lenses, detect
+```
+
+Where:
+- `<version>` is read from `.claude-plugin/plugin.json` `version` field
+- `<install path>` is the absolute path to the plugin root (parent of `skills/skill-reviewer/`)
+- The lens list is read from the table at the top of `reference/lenses.md`. If a lens is added, this list updates.
+- The subcommand list omits `--version` itself and omits flags (`--lens`, `--second-opinion`)
+
+If the plugin can't determine its install path (e.g., running from a non-standard location), substitute `(install path unknown)`. Don't fail.
+
+Do not emit any other text, prompts, or report sections. The user invoking `--version` wants a one-glance diagnostic.
+
+---
+
 ## What not to include
 
 - **Total grade or score.** No "B+ skill," no "8/10." Multi-axis findings replace single scores.
 - **Generic skill-author advice.** "Consider testing" is filler. Specifics only.
-- **Comparisons to other skills** unless `compare` subcommand was invoked OR a specific pattern from another skill is directly applicable.
+- **Comparisons to other skills** unless a specific pattern from another skill is directly applicable to the finding being made.
 - **Speculation about author intent.** Review what's there. If something is unclear, flag the ambiguity, don't guess what the author meant.
 - **Praise of the review itself.** "I've enjoyed reviewing this skill" is filler.
