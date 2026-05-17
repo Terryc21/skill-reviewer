@@ -110,7 +110,7 @@ When in doubt: run `/skill-reviewer review` on this repo and act on the findings
 
 These haven't been settled. If you have opinions, file an issue or propose a PR.
 
-1. **`compare <path1> <path2>` deferred from v0.2 (removed from surface).** The subcommand was listed in v0.1 but never spec'd — no `protocol.md § Compare mode` section ever existed. Removed in v0.2 pending real demand. Open shape questions if it returns in v0.3+: one merged report vs two parallel + synthesis; how to handle stylistic variations that aren't bugs; whether the lens variants apply per-skill or to the comparison as a whole.
+1. **`compare <path1> <path2>` deferred from v0.2 (removed from surface).** The subcommand was listed in v0.1 but never spec'd — no `protocol.md § Compare mode` section ever existed. Removed in v0.2 pending real demand. Open shape questions if it returns in v0.4+: one merged report vs two parallel + synthesis; how to handle stylistic variations that aren't bugs; whether the lens variants apply per-skill or to the comparison as a whole. Under v0.3, the card format would handle this cleanly — one set of cards per skill, plus a Patterns section synthesizing the cross-skill observations.
 2. **Should `detect` output be machine-readable (JSON) in addition to human-readable markdown?** Useful for CI integration but adds a parseability commitment.
 3. **Should there be a `--include` / `--exclude` flag to scope the review to specific files?** Useful when a skill is huge but you only want to audit one subsystem. Adds complexity to the protocol.
 4. **Should the second-opinion subagent be configurable (Plan vs Explore vs general-purpose)?** **Decided for v0.2: Plan-type only**, per `skills/skill-reviewer/reference/second-opinion.md:36`. Reopen if evidence accumulates that Plan-type produces consistently miscalibrated challenger reports for specific skill shapes. Until then, this is closed in the spec but tracked here as a known constraint.
@@ -132,3 +132,12 @@ skill-reviewer was extracted from a single Claude Code session in May 2026:
 The architecture choices (thin-index, four feature modules, severity rubric matching the user's conventions) were chosen during the planning phase before any file was written. The protocol itself is largely the prompt from step 4, restructured into reference files.
 
 The skill is therefore a literal artifact of using Claude Code well: each step generated something useful, and the final step turned the implicit knowledge into a reusable tool.
+
+---
+
+## Release history
+
+- **v0.3.0 (2026-05-17)** — Card-format output. Replaced the v0.2 8-section structure (TL;DR / Per-file findings / Cross-file findings / Quality signals / Recommended actions / Verification / Files referenced) with a 4-section card structure (TL;DR / Strengths / Findings / Patterns). Motivation: in practice the v0.2 format mentioned each finding 3-5 times across overlapping sections, forcing readers to reconcile multiple views to act. Cards mention each finding exactly once. Word budgets shrank ~50%. See `reference/output-format.md § What changed in v0.3`.
+- **v0.2.1 (2026-05)** — Three onboarding-polish gaps from the v0.2.0 self-review.
+- **v0.2.0 (2026-05)** — `--second-opinion` flag, additional lens variants, refined severity rubric.
+- **v0.1 (2026-05)** — Initial release extracted from the unforget review session (see Origin above).

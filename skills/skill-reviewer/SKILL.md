@@ -1,7 +1,7 @@
 ---
 name: skill-reviewer
-version: 0.2.1
-description: Use when reviewing a Claude Code skill, auditing skill quality before publish, or asking "is this skill any good?". Produces structured reports with file:line citations, severity-rated findings, ranked actions, and an optional second-opinion pass. Lens variants: safety, discoverability, architecture, parseability, tests, quick.
+version: 0.3.0
+description: Use when reviewing a Claude Code skill, auditing skill quality before publish, or asking "is this skill any good?". Produces structured reports with file:line citations, severity-rated findings cards, and an optional second-opinion pass. Lens variants: safety, discoverability, architecture, parseability, tests, quick.
 license: Apache-2.0
 ---
 
@@ -75,7 +75,7 @@ This SKILL.md is intentionally thin. The full spec is split across `reference/*.
 
 ## Examples
 
-`examples/sample-report-unforget.md` is a canonical example of skill-reviewer output. It reviews the `unforget` skill at full depth (plugin shape, ~3500 words) using the `full` lens. Read it to see what to produce and how the format works in practice.
+`examples/sample-report-unforget.md` is a canonical example of skill-reviewer output. It reviews the `unforget` skill at full depth (plugin shape, ~1500 words under the v0.3 card format) using the `full` lens. Read it to see what cards look like in practice and how Patterns differs from the v0.2 cross-file taxonomy it replaced.
 
 ---
 

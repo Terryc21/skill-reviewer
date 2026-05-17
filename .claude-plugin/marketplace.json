@@ -1,16 +1,16 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "skill-reviewer",
-  "description": "Use when reviewing a Claude Code skill, auditing skill quality before publish, or asking \"is this skill any good?\". Produces structured reports with file:line citations, severity-rated findings, ranked actions, and an optional second-opinion pass. Lens variants: safety, discoverability, architecture, parseability, tests, quick.",
+  "description": "Use when reviewing a Claude Code skill, auditing skill quality before publish, or asking \"is this skill any good?\". Produces structured reports with file:line citations, severity-rated findings cards, and an optional second-opinion pass. Lens variants: safety, discoverability, architecture, parseability, tests, quick.",
   "owner": {
     "name": "Terry Nyberg"
   },
   "plugins": [
     {
       "name": "skill-reviewer",
-      "version": "0.2.1",
+      "version": "0.3.0",
       "source": "./",
-      "description": "Use when reviewing a Claude Code skill, auditing skill quality before publish, or asking \"is this skill any good?\". Produces structured reports with file:line citations, severity-rated findings, ranked actions, and an optional second-opinion pass. Lens variants: safety, discoverability, architecture, parseability, tests, quick.",
+      "description": "Use when reviewing a Claude Code skill, auditing skill quality before publish, or asking \"is this skill any good?\". Produces structured reports with file:line citations, severity-rated findings cards, and an optional second-opinion pass. Lens variants: safety, discoverability, architecture, parseability, tests, quick.",
       "author": {
         "name": "Terry Nyberg"
       },

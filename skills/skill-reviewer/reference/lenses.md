@@ -6,6 +6,8 @@ Invoked as: `/skill-reviewer review <path> --lens=<name>`
 
 If no `--lens` flag is provided, the default is `full`.
 
+> **v0.3 note:** Lenses now produce reports in the card format defined in `reference/output-format.md` (TL;DR → Strengths → Findings → Patterns → Next step). Per-lens "Output:" lines below describe which **sections** the lens emphasizes and which it suppresses, not a separate report structure. Word budgets shrank ~50% under cards; see `reference/output-format.md § Word budget by lens` for the current numbers.
+
 ---
 
 ## Available lenses
@@ -18,7 +20,7 @@ If no `--lens` flag is provided, the default is `full`.
 | `architecture` | File structure, single-source-of-truth, spec-substitution discipline, redundancy, cross-file refs | Trigger phrasing, install UX |
 | `parseability` | Output formats, canonical schemas, regex provided where needed, machine-readable export | Discoverability, README narrative |
 | `tests` | What's tested, what's silently untested, coverage of destructive helpers, fixture quality | Trigger phrasing, README, parseability |
-| `quick` | TL;DR + top 5 strengths + top 5 weaknesses + top 5 recommended actions | Per-file detail, cross-file analysis, verification |
+| `quick` | TL;DR + 3-5 strengths + up to 5 finding cards + Next step | Patterns section, second-opinion banner |
 
 **Word budgets** for each lens (target and hard cap) live in `reference/output-format.md` § Word budget by lens. That table is canonical; if you need length guidance, read it there.
 
@@ -48,7 +50,7 @@ Use when: this is the first time reviewing the skill, or the author wants a comp
 - Internal architecture and file structure (unless it affects discoverability)
 - Per-file findings for `reference/*.md` (these are author-facing, not user-facing)
 
-**Output:** TL;DR + activation analysis + per-manifest findings + README findings + recommended actions table. Skip per-file analysis of internal reference docs.
+**Output:** TL;DR + Strengths + Findings (focused on manifest/README/frontmatter issues) + Patterns + Next step. Skip cards about internal reference docs unless they affect discoverability.
 
 Use when: the skill is built and you're asking "will users find this and trigger it correctly?"
 
@@ -67,7 +69,7 @@ Use when: the skill is built and you're asking "will users find this and trigger
 - README narrative quality (unless recovery instructions are in the README)
 - Parseability
 
-**Output:** TL;DR + destructive-ops audit + error-handling audit + recovery-procedure audit + recommended actions. Severity table heavily weighted toward 🔴 CRITICAL and 🟡 HIGH.
+**Output:** TL;DR + Strengths + Findings (focused on destructive operations, error handling, and recovery) + Patterns + Next step. Findings heavily weighted toward 🔴 CRITICAL and 🟡 HIGH.
 
 Use when: the skill performs destructive operations (file deletion, schema changes, git operations) or is heading to production users.
 
@@ -85,7 +87,7 @@ Use when: the skill performs destructive operations (file deletion, schema chang
 - Trigger phrasing (covered by `discoverability` lens)
 - Install UX
 
-**Output:** TL;DR + per-file architectural notes + cross-file inconsistencies + redundancy table + recommended actions.
+**Output:** TL;DR + Strengths + Findings (focused on inconsistencies, redundant sources of truth, and cross-file references) + Patterns (this lens uses Patterns heavily — architectural drift often shows up only when you compare files) + Next step.
 
 Use when: the skill has grown to >5 reference files or is being prepared for contributor onboarding.
 
@@ -103,7 +105,7 @@ Use when: the skill has grown to >5 reference files or is being prepared for con
 - README narrative
 - Per-file detail for everything except files defining output formats
 
-**Output:** TL;DR + format-precision audit + downstream-compat findings + recommended schemas/regexes + recommended actions.
+**Output:** TL;DR + Strengths + Findings (focused on output-format precision, downstream-tool compatibility, and missing schemas/regexes) + Patterns + Next step. Card Fix lines should include the actual regex or schema when proposing one.
 
 Use when: the skill produces structured output that other tools will consume, or the author wants to build CI integrations.
 
@@ -121,25 +123,23 @@ Use when: the skill produces structured output that other tools will consume, or
 - README
 - Architecture (unless it blocks testability)
 
-**Output:** TL;DR + per-helper coverage table + silent-gap callouts + recommended test additions with effort estimates.
+**Output:** TL;DR + Strengths + Findings (one card per helper or feature with a coverage gap, plus cards for silent-untested patterns) + Patterns + Next step. The Patterns section is a good place to summarize coverage gaps that span multiple helpers.
 
 Use when: the skill has helper scripts/code and the author wants a test-coverage audit before adding more features.
 
 ### `quick`
 
 **Apply:**
-- TL;DR (1 paragraph)
-- Top 5 strengths with file:line citations
-- Top 5 weaknesses with file:line citations
-- Top 5 recommended actions, ranked
+- TL;DR (1 paragraph, no weakness clusters block)
+- Strengths (3-5 items, ratchet down from 5-10)
+- Findings (5 cards maximum, sorted by severity)
+- Next step (1 line)
 
 **Skip:**
-- Per-file analysis
-- Cross-file detail
-- Verification section
-- Files-referenced list
+- Patterns across findings (the quick lens is too short for cross-cutting synthesis)
+- Second-opinion banner unless `--second-opinion` was explicitly passed
 
-**Output:** ~600-1000 words total. No subsections beyond the four above.
+**Output:** ~500-800 words total. Cards stay the same shape as the full lens — Why + Fix + citation — just capped at 5.
 
 Use when: the author wants a fast sanity check before deeper work, or to triage which lens to apply next.
 

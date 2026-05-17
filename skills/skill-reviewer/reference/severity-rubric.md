@@ -1,6 +1,8 @@
-# Severity rubric and findings table format
+# Severity rubric
 
-Authoritative spec for how findings are labeled, scored, and tabulated in skill-reviewer reports.
+Authoritative spec for how findings are labeled and scored in skill-reviewer reports.
+
+> **v0.3 note:** This file used to specify a Recommended Actions table format (7-column table) and a Per-file findings format (bullet lists by file). Both were retired when v0.3 collapsed all finding presentations into the card format defined in `reference/output-format.md`. The remaining content here — severity colors, effort buckets, quick-win rules, strength signals — is reused by cards.
 
 ---
 
@@ -31,48 +33,17 @@ Three buckets only. Don't try to be more precise than this — review-time effor
 
 ---
 
-## Findings table format
+## Card field rules (v0.3+)
 
-Every report includes at least one **Recommended Actions** table near the end. It uses this column shape:
-
-| Rank | Severity | Action | File:Line | Effort | Quick win? | Why |
-|---|---|---|---|---|---|---|
-
-**Column rules:**
-
-- **Rank** — integer, 1 is highest priority. Ties allowed.
-- **Severity** — 🔴 / 🟡 / 🟢 / ⚪ with the label inline (e.g., `🟡 HIGH`).
-- **Action** — imperative phrase. "Add parsing regex to format.md" not "Parsing regex is missing."
-- **File:Line** — anchor for the finding. Use a stable section name when line numbers are too volatile (e.g., `format.md § Compact preset`).
-- **Effort** — Small / Medium / Large.
-- **Quick win?** — ✅ if Small effort AND non-architectural AND no dependencies. Blank otherwise.
-- **Why** — one sentence. The reason this fix matters.
-
-**Sorting:** primary by Severity (🔴 first), secondary by Quick win (✅ first within the same severity), tertiary by Effort (Small first).
-
----
-
-## Per-file findings format
-
-Per-file findings do NOT use a table. They use bullet lists with inline severity tags.
-
-Example:
+Severity colors, effort buckets, and quick-win tags appear inside each finding card as specified in `reference/output-format.md § 3. Findings`. The card's citation line carries:
 
 ```
-### reference/format.md
-
-**Summary:** Defines the 10-column rating table schema, four sections, target/urgency/ROI values, detail-block structure, four presets, anti-patterns.
-
-**Strengths**
-- 🟠 Detail-block contract (lines 56-72) precisely orders closure pointer → body → verify-still-open → spawn links with worked examples
-- 🟠 Verify-still-open recipe (lines 73-95) is original; treats rows as decaying artifacts
-
-**Weaknesses**
-- 🟡 Compact preset parsing is under-specified (lines 110-122) — no regex provided for the `**🔴 THIS · …**` format; downstream tools have to guess
-- 🟢 Lean preset description ("drops to 6 columns") momentarily ambiguous on first read; list the kept and dropped columns explicitly
+*`<file>:<line>` · <Effort> · <✅ quick win if applicable>*
 ```
 
-Strength bullets use 🟠 (positive). Weakness bullets use the severity color (🔴/🟡/🟢/⚪).
+with severity emoji and rank in the card heading. Card sort order: severity (🔴 first) → quick-win (✅ first within the same severity) → file path (alphabetical within ties).
+
+Strengths use 🟠 (positive indicator, not severity) and live in their own section above Findings — see `reference/output-format.md § 2. Strengths to keep` for the full format.
 
 ---
 
@@ -118,7 +89,7 @@ The "how it generalizes" sentence is high-value. It turns the strength from "you
 
 Two exceptions where the severity rubric does NOT apply:
 
-1. **`quick` lens reports** — too short for a full table; bullet lists with inline severity tags suffice.
-2. **Pure narrative findings** (e.g., "the README's voice is clear and confident") — these go in the TL;DR or Quality signals section, not the Recommended Actions table.
+1. **`quick` lens reports** — under v0.3, the quick lens still produces cards but capped at 5. The rubric applies the same way; the cap is the only difference.
+2. **Pure narrative findings** (e.g., "the README's voice is clear and confident") — these go in the TL;DR or the Strengths section, not the Findings cards. Strengths use 🟠 and don't carry severity/effort fields.
 
-Otherwise every finding gets a severity color, an effort estimate, and a place in the actions table.
+Otherwise every finding gets a severity color, an effort estimate, and its own card in the Findings section.

@@ -1,6 +1,6 @@
 # skill-reviewer
 
-[![Version](https://img.shields.io/badge/version-0.2.1-blue.svg)](https://github.com/Terryc21/skill-reviewer/releases)
+[![Version](https://img.shields.io/badge/version-0.3.0-blue.svg)](https://github.com/Terryc21/skill-reviewer/releases)
 [![License](https://img.shields.io/badge/license-Apache--2.0-green.svg)](LICENSE)
 [![Claude Code](https://img.shields.io/badge/Claude%20Code-plugin-orange.svg)](https://docs.anthropic.com/en/docs/claude-code/skills)
 [![GitHub stars](https://img.shields.io/github/stars/Terryc21/skill-reviewer?style=social)](https://github.com/Terryc21/skill-reviewer/stargazers)
@@ -13,7 +13,7 @@ Your friend says: "Looks great! Maybe consider adding tests?"
 
 That's not a review. That's a hug.
 
-`skill-reviewer` is a Claude Code skill that reviews other skills the way you'd want them reviewed if shipping mattered. It reads every file, cites specific lines, and separates strengths from weaknesses. (You need both. Reviews that only list problems tell you what to change but not what to keep.) It ranks fixes by effort and severity so you can pick the quick wins first, and it refuses to hedge. If something is fragile, it'll say so. If something is unusually well-done, it'll say that too.
+`skill-reviewer` is a Claude Code skill that reviews other skills the way you'd want them reviewed if shipping mattered. It reads every file, cites specific lines, and separates strengths from weaknesses. (You need both. Reviews that only list problems tell you what to change but not what to keep.) Each finding lands in its own card with severity, effort, and quick-win tag, so you can pick the low-cost-high-leverage fixes first. It refuses to hedge: if something is fragile, it'll say so. If something is unusually well-done, it'll say that too.
 
 ## A real fragment
 
@@ -38,7 +38,7 @@ Weakness clusters:
 5. Under-specified fallbacks — "fail-soft" and Python-missing triggers vague
 ```
 
-Notice what's there: file paths, named gaps, specific patterns. Notice what's not: "great work overall," "minor improvements possible," "consider thinking about." The full report (preserved at [`skills/skill-reviewer/examples/sample-report-unforget.md`](skills/skill-reviewer/examples/sample-report-unforget.md)) continues with per-file findings, a ranked actions table, and verification steps for each fix.
+Notice what's there: file paths, named gaps, specific patterns. Notice what's not: "great work overall," "minor improvements possible," "consider thinking about." The full report (preserved at [`skills/skill-reviewer/examples/sample-report-unforget.md`](skills/skill-reviewer/examples/sample-report-unforget.md)) continues with the strengths to keep, individual finding cards (each with Why / Fix / citation), and a free-form Patterns section synthesizing what crossed cards.
 
 ## Install
 
@@ -76,7 +76,7 @@ Point it at a skill directory:
 /skill-reviewer review /path/to/some-skill
 ```
 
-Two to five minutes later you get a structured markdown report. Per-file findings, cross-file consistency checks, a ranked actions table with severity colors and effort estimates, and a verification section telling you how to test each fix.
+Two to five minutes later you get a structured markdown report: a one-paragraph TL;DR, 5-10 strengths to keep, a stack of finding cards sorted by severity (each card is one finding with Why / Fix / citation / effort / quick-win tag), and a short Patterns section naming what crossed cards. Roughly 1500 words for a plugin-shape skill.
 
 If you want a 5-minute sanity check instead of the full audit:
 
@@ -84,7 +84,7 @@ If you want a 5-minute sanity check instead of the full audit:
 /skill-reviewer summary /path/to/some-skill
 ```
 
-That gives you the headline verdict, the top 5 strengths, the top 5 weaknesses, and the top 5 actions. Roughly 800 words. Useful when you're deciding whether to commit to a full review or just spot-check.
+That gives you the headline verdict, 3-5 strengths, up to 5 finding cards, and a one-line next step. Roughly 500-800 words. Useful when you're deciding whether to commit to a full review or just spot-check.
 
 ## When you'd use this
 
@@ -184,7 +184,7 @@ Things this skill **won't** accept:
 
 ## Maturity
 
-v0.2.1. Three release cycles in. Used on real skills, including itself. Open questions and v0.3+ candidates documented in `docs/DESIGN.md`.
+v0.3.0. Card-format release. Open questions and v0.4+ candidates documented in `docs/DESIGN.md`.
 
 ## Support the work
 
