@@ -56,6 +56,8 @@ Wait for "Successfully added marketplace," then:
 
 Verify with `/skill-reviewer --version`. You should see three lines: version, install path, and the list of available lenses.
 
+**How invocation works.** The plugin registers `/skill-reviewer` as a single skill activation. Claude parses everything after it as a subcommand string — `review <path>`, `summary <path>`, `lenses`, `detect <path>`, `--version`. The subcommands listed throughout this README are recognized argument shapes, not separately-registered slash commands. There is no per-subcommand autocomplete; typing `/skill-reviewer ` and pressing Tab won't enumerate `review` / `summary` / `lenses` for you. (Tab will offer `/skill-reviewer` itself once the plugin is installed.)
+
 <details>
 <summary><strong>Manual install if the plugin path isn't available</strong></summary>
 
@@ -66,7 +68,7 @@ git clone https://github.com/Terryc21/skill-reviewer ~/.claude/skills/skill-revi
 
 Invoke as `/skill skill-reviewer <args>` (with the prefix). Update later with `cd ~/.claude/skills/skill-reviewer && git pull`.
 
-**Caveat:** manual install registers skill-reviewer as a Skill rather than a Plugin. Subcommands work identically as arguments — `/skill skill-reviewer review <path>`, `/skill skill-reviewer summary <path>`, etc. — but each subcommand is *not* a native slash command of its own. The rest of this README uses the plugin-install form (`/skill-reviewer review <path>`); if you used the manual path, mentally prepend `/skill ` to every example. For autocomplete on `/skill-reviewer review`, `/skill-reviewer summary`, and friends, use the plugin install path above.
+**Caveat:** manual install registers skill-reviewer as a Skill rather than a Plugin. Subcommands work identically as arguments — `/skill skill-reviewer review <path>`, `/skill skill-reviewer summary <path>`, etc. The rest of this README uses the plugin-install form (`/skill-reviewer review <path>`); if you used the manual path, mentally prepend `/skill ` to every example.
 
 </details>
 

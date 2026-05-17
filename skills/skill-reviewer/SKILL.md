@@ -7,7 +7,7 @@ license: Apache-2.0
 
 # skill-reviewer
 
-> Installed as a Claude Code plugin in v0.1. Invoke as `/skill-reviewer <subcommand>`.
+> Installed as a Claude Code plugin in v0.1. Invoke as `/skill-reviewer <subcommand>`. The plugin registers `/skill-reviewer` as a single skill activation; Claude parses the argument string as a subcommand. There is no per-subcommand autocomplete or native slash command for each row in the table below — they are subcommand strings the skill recognizes, not registered commands.
 
 > Candid, no-bullshit reviews of Claude Code skills. Honest about strengths and weaknesses both.
 
@@ -36,6 +36,14 @@ Three things distinguish a skill-reviewer report from generic feedback:
 | `/skill-reviewer lenses` | List available lenses with descriptions | `reference/lenses.md` |
 | `/skill-reviewer detect <path>` | Classification only; print shape + recommended review depth | `reference/detection.md` |
 | `/skill-reviewer --version` | Print version, install path, supported lens names | `reference/output-format.md` § `--version` output |
+
+**Flags** (apply to `review` only unless noted):
+
+| Flag | Purpose | Full spec |
+|---|---|---|
+| `--lens=<name>` | Apply one of the seven lens variants (`full`, `discoverability`, `safety`, `architecture`, `parseability`, `tests`, `quick`) | `reference/lenses.md` |
+| `--second-opinion` | Add a reconciliation pass from an independent reviewer | `reference/second-opinion.md` |
+| `--force` | Bypass detection refusal (review a path that doesn't look like a skill) | `reference/detection.md` § Refusal patterns |
 
 ---
 
