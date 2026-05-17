@@ -1,5 +1,10 @@
 # skill-reviewer
 
+[![Version](https://img.shields.io/badge/version-0.2.1-blue.svg)](https://github.com/Terryc21/skill-reviewer/releases)
+[![License](https://img.shields.io/badge/license-Apache--2.0-green.svg)](LICENSE)
+[![Claude Code](https://img.shields.io/badge/Claude%20Code-plugin-orange.svg)](https://docs.anthropic.com/en/docs/claude-code/skills)
+[![GitHub stars](https://img.shields.io/github/stars/Terryc21/skill-reviewer?style=social)](https://github.com/Terryc21/skill-reviewer/stargazers)
+
 > **Based on Anthropic's [Claude Code Skills architecture](https://docs.anthropic.com/en/docs/claude-code/skills). A reviewer for the skills you write on that foundation.**
 
 You built a skill. You want feedback. You ask a friend.
@@ -180,6 +185,12 @@ Things this skill **won't** accept:
 ## Maturity
 
 v0.2.1. Three release cycles in. Used on real skills, including itself. Open questions and v0.3+ candidates documented in `docs/DESIGN.md`.
+
+## Support the work
+
+If `skill-reviewer` has saved you from shipping a skill with quiet flaws, consider buying me a coffee. No pressure, no obligation, no paywall on the skill itself.
+
+[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-FFDD00?style=flat&logo=buy-me-a-coffee&logoColor=black)](https://www.buymeacoffee.com/terryc21)
 
 ## License
 

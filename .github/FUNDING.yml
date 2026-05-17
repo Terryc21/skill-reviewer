@@ -1,0 +1,5 @@
+# GitHub Sponsor button configuration.
+# Enables the "❤️ Sponsor" button at the top of the repo page next to "Watch" and "Fork."
+# Also surfaces a sponsor link in the right-sidebar's "Sponsor this project" section.
+
+custom: ["https://www.buymeacoffee.com/terryc21"]
