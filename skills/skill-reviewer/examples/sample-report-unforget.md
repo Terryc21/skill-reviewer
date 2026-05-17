@@ -1,10 +1,12 @@
 # Sample report: review of `unforget` (v0.2.0)
 
-This is a canonical example of skill-reviewer output. It reviews the `unforget` skill (a sibling repo by the same author) using the `full` lens. The skill was classified as **plugin** shape, so target length is ~1500 words under the v0.3 card format.
+This is a canonical example of skill-reviewer output. It reviews the `unforget` skill (a sibling repo by the same author) using the `full` lens. The skill was classified as **plugin** shape, so the target length is ~1500 words under the card format.
 
 Read this to see how cards work in practice. Your own reports won't be identical — the findings depend on the skill — but the structure should match.
 
-> **Format note:** This report is in v0.3 card format. It was originally produced under v0.2 (8-section structure) and re-rendered for v0.3 when the format changed. Findings, strengths, and TL;DR are unchanged; the surface structure is what shifted. Compare with git history if you want to see the v0.2 shape.
+> **Word count: 1841.** This is 22% over the plugin-shape target (~1500) but well under the hard cap (2500, per `reference/output-format.md § Word budget by lens`). The over-target reflects this report's role as a canonical reference — it shows the full shape of a thorough review with 13 findings. Real reviews should aim for the target unless the audit genuinely justifies more; a 1500-word report with 8-10 findings is more representative of a typical run.
+
+> **Format note:** This report uses the card format. It was originally produced under the earlier 8-section structure and re-rendered when the format changed; findings, strengths, and TL;DR are unchanged.
 
 ---
 

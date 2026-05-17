@@ -4,13 +4,11 @@ Authoritative spec for the structure of every skill-reviewer report. Applies to 
 
 ---
 
-## What changed in v0.3 (card format)
+## Card format rationale
 
-This spec replaces the v0.2 eight-section structure with a four-section card format. The motivation: in practice, the v0.2 format mentioned each finding 3-5 times (per-file Weaknesses → cross-file taxonomy → Quality Signals "Weak or unclear" → Recommended Actions table → Verification cross-reference), forcing authors to reconcile five views of the same item to figure out what to fix and how. Cognitive load was the dominant complaint.
+The four-section card format (TL;DR → Strengths → Findings → Patterns) mentions each finding exactly once, in a self-contained block that carries every detail a reader needs to act: severity, why-it-matters, fix, citation, effort, quick-win tag. Per-file Strengths and the Quality Signals list collapse into a single Strengths section above the findings. The cross-file taxonomy (formerly eight fixed subsections, often half-empty) becomes a free-form "Patterns across findings" section showing only what surfaced.
 
-The card format mentions each finding exactly once, in a self-contained block that carries every detail a reader needs to act: severity, why-it-matters, fix, citation, effort, quick-win tag. Per-file Strengths and the Quality Signals "Unusually well-done" list collapse into a single Strengths section above the findings. The cross-file taxonomy (eight fixed subsections, often half-empty) becomes a free-form "Patterns across findings" section showing only what surfaced.
-
-Net effect: a typical plugin-shape report drops from ~3000 words to ~1200-1500 words while preserving every finding and every strength.
+This shape exists because earlier formats mentioned each finding 3-5 times across overlapping sections (per-file Weaknesses → cross-file taxonomy → Quality Signals → Recommended Actions → Verification), forcing readers to reconcile five views of the same item. Cards solve that by carrying every detail in one block. A typical plugin-shape report runs ~1200-1500 words while preserving every finding and every strength.
 
 ---
 
@@ -25,14 +23,14 @@ Net effect: a typical plugin-shape report drops from ~3000 words to ~1200-1500 w
 
 Lenses shorten or reorder sections — see `reference/lenses.md` for per-lens specs.
 
-**What v0.2 removed (with rationale):**
+**What the card format deliberately omits:**
 
-- **Per-file findings section.** Findings carry file:line citations inline; readers don't need a parallel index organized by file path. Authors confirmed the per-file Summary paragraphs were unread — the author wrote the file and doesn't need a summary of it.
-- **Cross-file findings section with fixed 8-subsection taxonomy.** The taxonomy slots (Inconsistencies / Missing pieces / Redundancy / Trigger-phrasing / Error handling / Slash-command registration / Tooling and parseability / Test coverage) pulled for filler when a subsection had only one finding. Replaced by free-form Patterns section that surfaces only what crosses files.
-- **Quality signals "Weak or unclear" list.** Was a re-rank of the same findings that already appeared in Per-file Weaknesses + Cross-file findings + Recommended Actions. Cards subsume this entirely.
-- **Recommended Actions table.** The cards ARE the table — each card is one row, prose-shaped, sortable by severity. Authors reported skipping straight to the table; promoting cards to the primary findings vehicle aligns the format with how readers actually use the report.
-- **Verification section.** Per-fix verification steps now live inside the relevant card (in the Fix line) when non-obvious. A standalone Verification section repeated information without adding clarity.
-- **Files referenced trailing list.** Citations are inline; the list was never re-read by authors.
+- **Per-file findings section.** Findings carry file:line citations inline; a parallel index organized by file path is redundant. The author wrote the file and doesn't need a summary of it.
+- **Fixed-taxonomy cross-file section.** Fixed subsection slots (Inconsistencies / Missing pieces / Redundancy / etc.) pull for filler when a slot has only one finding. The free-form Patterns section surfaces only what actually crosses files.
+- **Separate "Weak or unclear" re-rank.** Cards are already sorted by severity; a re-rank list duplicates the cards' order.
+- **Recommended Actions table.** The cards ARE the table — each card is one row, prose-shaped, sortable by severity. Readers go straight to the cards; a parallel table adds no information.
+- **Standalone Verification section.** Per-fix verification steps live inside the relevant card (in the Fix line) when non-obvious.
+- **Files referenced trailing list.** Citations are inline.
 
 ---
 
@@ -71,7 +69,7 @@ This warning takes precedence over the second-opinion banner. If both apply, lea
 
 ### 2. Strengths to keep
 
-5-10 items, one bullet each. Position is deliberate: strengths-before-weaknesses gets read more reliably than the v0.2 placement after per-file findings.
+5-10 items, one bullet each. Position is deliberate: strengths-before-weaknesses gets read more reliably than placement after the findings list.
 
 Per-item format:
 
@@ -102,7 +100,7 @@ Per-card format:
 
 **Card field rules:**
 
-- **Severity emoji + rank:** 🔴/🟡/🟢/⚪ followed by an integer rank. Rank is purely a sort order; ties are allowed. Severity meanings are unchanged from v0.2 (see `reference/severity-rubric.md`).
+- **Severity emoji + rank:** 🔴/🟡/🟢/⚪ followed by an integer rank. Rank is purely a sort order; ties are allowed. Severity meanings: see `reference/severity-rubric.md`.
 - **Title:** 8-12 words, declarative. "Version mismatch across four files" not "There is a version mismatch issue with the manifests."
 - **Why:** one sentence. If the consequence isn't clear in one sentence, the finding is probably two findings — split it.
 - **Fix:** imperative. "Bump version" not "version should be bumped." If the fix has a verification step that isn't obvious from the change itself, add it as a second sentence: "Then re-run `/plugin install` to confirm the manifest validates." Do not add a separate Verification section.
@@ -116,7 +114,7 @@ Per-card format:
 >
 > **Why:** heading says "Check the codebase compiles (best-effort)" but the body says "Do NOT actually run a build." The intent (note build-manifest presence in report header) is fine; the title is misleading.
 
-**Quick-win tag rules** (unchanged from v0.2): a finding qualifies as a quick win if all three are true — Effort = Small, non-architectural, no external dependencies. Common quick-wins: adding a missing regex, fixing a stale version number, rewriting a YAML description as verb-first, removing a dangling reference.
+**Quick-win tag rules:** a finding qualifies as a quick win if all three are true — Effort = Small, non-architectural, no external dependencies. Common quick-wins: adding a missing regex, fixing a stale version number, rewriting a YAML description as verb-first, removing a dangling reference. See `reference/severity-rubric.md § Quick-win tag rules` for the canonical spec.
 
 ### 4. Patterns across findings
 
@@ -130,7 +128,7 @@ Examples of pattern-worthy observations:
 - "The canonical example is ahead of the spec, not behind it. WATCH classification, custom analyzers, and the deviation note acknowledge the example invented capabilities the spec hasn't ratified. The spec needs to catch up, not the example to retreat."
 - "Three of the six MEDIUM findings are documentation-only; one architectural HIGH (#6) is the only non-trivial fix this release."
 
-**Anti-pattern to avoid:** don't re-introduce the v0.2 cross-file taxonomy here. Patterns section is a free-form synthesis, not a fixed grid. If you find yourself writing "Inconsistencies:" / "Missing pieces:" / "Redundancy:" as sub-headings, you've drifted back into v0.2 — collapse them or drop the section.
+**Anti-pattern to avoid:** don't re-introduce a fixed cross-file taxonomy here. The Patterns section is free-form synthesis, not a fixed grid. If you find yourself writing "Inconsistencies:" / "Missing pieces:" / "Redundancy:" as sub-headings, you've drifted into a taxonomy — collapse them or drop the section.
 
 ### 5. Second-opinion reconciliation (conditional)
 
@@ -179,7 +177,7 @@ Apply to every report:
 
 ## Word budget by lens
 
-Budgets reduced ~50% to reflect the card format's density. Cards carry every finding's full detail in ~50 words each; the v0.2 budgets assumed each finding appeared in 3-5 sections.
+Cards carry every finding's full detail in ~50 words each, so the targets below are tighter than a multi-section format would require.
 
 | Lens | Target | Hard cap |
 |---|---|---|
@@ -230,36 +228,3 @@ Do not emit any other text, prompts, or report sections. The user invoking `--ve
 - **Files-referenced trailing list.** Inline citations make the list redundant.
 - **A standalone Verification section.** Per-fix verification, if non-obvious, lives in the relevant card's Fix line.
 
----
-
-## Migration from v0.2 (one-time, for skill-reviewer authors)
-
-This subsection exists for the maintainer's reference during the format change. Remove after v0.3 ships.
-
-**For each existing review** (if re-running against the same skill under v0.3):
-- TL;DR paragraph stays.
-- Per-file Strengths bullets → merge into the single Strengths section, deduplicate against Quality Signals' "Unusually well-done."
-- Per-file Weaknesses bullets + Cross-file findings bullets + Quality Signals' "Weak or unclear" + Recommended Actions rows → collapse into a single set of cards, one per finding.
-- Verification section content → distribute into individual cards' Fix lines where the verification step isn't obvious from the change.
-- Files referenced list → drop.
-
-**Sample v0.2 → v0.3 transformation** (one finding):
-
-v0.2 surface area:
-
-- Per-file Weaknesses bullet: `🔴 Version mismatch (`plugin.json:3`) — frontmatter says `version: 1.1.0` while plugin.json says 1.0.0`
-- Cross-file Inconsistencies bullet: `🔴 Version mismatch across four files — plugin.json:3, marketplace.json:11, SKILL.md:4, README.md:235`
-- Quality Signals "Weak or unclear" #1: `🔴 Version mismatch across four files`
-- Recommended Actions row #1: `🔴 CRITICAL | Unify version to one number across all four files | plugin.json:3 etc. | Small | ✅ | Marketplace install dialog and router will disagree until fixed`
-- Verification section: `Version fix: after editing the four version locations, run grep ...`
-
-v0.3 single card:
-
-```
-### 🔴 1. Version mismatch across four files
-**Why:** marketplace install dialog shows `1.0.0`; SKILL.md frontmatter is `1.1.0`. Users installing today won't know the v1.1.0 features exist.
-**Fix:** bump `plugin.json`, `marketplace.json`, and the two `README.md` mentions to `1.1.0`. Verify via `grep -rn "1.0.0" --include="*.md" --include="*.json"` after editing.
-*`plugin.json:3` · `marketplace.json:11` · `README.md:20, 235` · Small · ✅ quick win*
-```
-
-One block, every detail, no cross-references to re-thread.

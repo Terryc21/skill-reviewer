@@ -61,10 +61,12 @@ Verify with `/skill-reviewer --version`. You should see three lines: version, in
 
 ```bash
 mkdir -p ~/.claude/skills
-git clone https://github.com/Terryc21/skill-reviewer.git ~/.claude/skills/skill-reviewer
+git clone https://github.com/Terryc21/skill-reviewer ~/.claude/skills/skill-reviewer
 ```
 
-Invoke as `/skill skill-reviewer` (with the prefix). Update later with `cd ~/.claude/skills/skill-reviewer && git pull`.
+Invoke as `/skill skill-reviewer <args>` (with the prefix). Update later with `cd ~/.claude/skills/skill-reviewer && git pull`.
+
+**Caveat:** manual install registers skill-reviewer as a Skill rather than a Plugin. Subcommands work identically as arguments — `/skill skill-reviewer review <path>`, `/skill skill-reviewer summary <path>`, etc. — but each subcommand is *not* a native slash command of its own. The rest of this README uses the plugin-install form (`/skill-reviewer review <path>`); if you used the manual path, mentally prepend `/skill ` to every example. For autocomplete on `/skill-reviewer review`, `/skill-reviewer summary`, and friends, use the plugin install path above.
 
 </details>
 

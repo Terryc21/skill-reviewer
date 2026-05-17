@@ -1,8 +1,6 @@
 # Severity rubric
 
-Authoritative spec for how findings are labeled and scored in skill-reviewer reports.
-
-> **v0.3 note:** This file used to specify a Recommended Actions table format (7-column table) and a Per-file findings format (bullet lists by file). Both were retired when v0.3 collapsed all finding presentations into the card format defined in `reference/output-format.md`. The remaining content here — severity colors, effort buckets, quick-win rules, strength signals — is reused by cards.
+Authoritative spec for how findings are labeled and scored in skill-reviewer reports. Defines severity colors, effort buckets, quick-win tag rules, and strength signals — all of which are consumed by the card format in `reference/output-format.md`.
 
 ---
 

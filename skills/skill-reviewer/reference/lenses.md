@@ -6,7 +6,7 @@ Invoked as: `/skill-reviewer review <path> --lens=<name>`
 
 If no `--lens` flag is provided, the default is `full`.
 
-> **v0.3 note:** Lenses now produce reports in the card format defined in `reference/output-format.md` (TL;DR → Strengths → Findings → Patterns → Next step). Per-lens "Output:" lines below describe which **sections** the lens emphasizes and which it suppresses, not a separate report structure. Word budgets shrank ~50% under cards; see `reference/output-format.md § Word budget by lens` for the current numbers.
+Lenses produce reports in the card format defined in `reference/output-format.md` (TL;DR → Strengths → Findings → Patterns → Next step). Per-lens "Output:" lines below describe which **sections** the lens emphasizes and which it suppresses, not a separate report structure. Word budgets per lens live in `reference/output-format.md § Word budget by lens`.
 
 ---
 
@@ -139,7 +139,7 @@ Use when: the skill has helper scripts/code and the author wants a test-coverage
 - Patterns across findings (the quick lens is too short for cross-cutting synthesis)
 - Second-opinion banner unless `--second-opinion` was explicitly passed
 
-**Output:** ~500-800 words total. Cards stay the same shape as the full lens — Why + Fix + citation — just capped at 5.
+**Output:** ~500 words target, 800 hard cap. Cards stay the same shape as the full lens — Why + Fix + citation — just capped at 5.
 
 Use when: the author wants a fast sanity check before deeper work, or to triage which lens to apply next.
 

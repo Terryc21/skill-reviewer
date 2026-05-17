@@ -90,6 +90,8 @@ The thin-index architecture only works if these invariants hold:
 4. **Cross-file references use stable anchors.** Prefer `skills/skill-reviewer/reference/severity-rubric.md § Effort definitions` over `skills/skill-reviewer/reference/severity-rubric.md:42`. Line numbers drift; section names don't.
 5. **Examples conform to the spec.** `skills/skill-reviewer/examples/sample-report-unforget.md` uses the severity rubric and the output format exactly as specified. If you change the spec, update the example.
 6. **No duplicate sources of truth.** If a definition appears in two reference files, one is canonical and the other refers to it. Don't restate.
+7. **The section name `## Open design questions` in this file is load-bearing.** `SKILL.md:87` and `README.md:159` cite it by name as the canonical known-gaps list referenced by the self-review acceptance criteria. If you rename this section, search the repo for `Open design questions` and update the citing files. Same rule for the section name `## Decided design questions` introduced for settled items.
+8. **Every entry in `## Open design questions` must carry a target.** Either a specific version (`Target: v0.4+`) or an explicit `Target: untargeted; reopen when demand surfaces`. The self-review acceptance criteria require known-gaps entries to have a target version; the list must follow the rule it enforces.
 
 When in doubt: run `/skill-reviewer review` on this repo and act on the findings.
 
@@ -108,13 +110,20 @@ When in doubt: run `/skill-reviewer review` on this repo and act on the findings
 
 ## Open design questions
 
-These haven't been settled. If you have opinions, file an issue or propose a PR.
+These haven't been settled. If you have opinions, file an issue or propose a PR. Every entry carries a target version (or an explicit `untargeted` marker) per cross-file invariant #8.
 
-1. **`compare <path1> <path2>` deferred from v0.2 (removed from surface).** The subcommand was listed in v0.1 but never spec'd — no `protocol.md § Compare mode` section ever existed. Removed in v0.2 pending real demand. Open shape questions if it returns in v0.4+: one merged report vs two parallel + synthesis; how to handle stylistic variations that aren't bugs; whether the lens variants apply per-skill or to the comparison as a whole. Under v0.3, the card format would handle this cleanly — one set of cards per skill, plus a Patterns section synthesizing the cross-skill observations.
-2. **Should `detect` output be machine-readable (JSON) in addition to human-readable markdown?** Useful for CI integration but adds a parseability commitment.
-3. **Should there be a `--include` / `--exclude` flag to scope the review to specific files?** Useful when a skill is huge but you only want to audit one subsystem. Adds complexity to the protocol.
-4. **Should the second-opinion subagent be configurable (Plan vs Explore vs general-purpose)?** **Decided for v0.2: Plan-type only**, per `skills/skill-reviewer/reference/second-opinion.md:36`. Reopen if evidence accumulates that Plan-type produces consistently miscalibrated challenger reports for specific skill shapes. Until then, this is closed in the spec but tracked here as a known constraint.
-5. **Should reports include a recommended next-review date based on how much the skill has changed?** Useful for ongoing maintenance audits, but requires tracking review history somewhere.
+1. **`compare <path1> <path2>` deferred from v0.2 (removed from surface).** The subcommand was listed in v0.1 but never spec'd — no `protocol.md § Compare mode` section ever existed. Removed in v0.2 pending real demand. Open shape questions if it returns: one merged report vs two parallel + synthesis; how to handle stylistic variations that aren't bugs; whether the lens variants apply per-skill or to the comparison as a whole. Under the card format, this would render cleanly — one set of cards per skill, plus a Patterns section synthesizing cross-skill observations. **Target: v0.4+ (deferred pending real demand).**
+2. **Should `detect` output be machine-readable (JSON) in addition to human-readable markdown?** Useful for CI integration but adds a parseability commitment. **Target: untargeted; reopen when CI integration demand surfaces.**
+3. **Should there be a `--include` / `--exclude` flag to scope the review to specific files?** Useful when a skill is huge but you only want to audit one subsystem. Adds complexity to the protocol. **Target: untargeted; reopen if a multi-subsystem skill emerges that warrants partial review.**
+4. **Should reports include a recommended next-review date based on how much the skill has changed?** Useful for ongoing maintenance audits, but requires tracking review history somewhere. **Target: untargeted; reopen if a review-history persistence layer is added.**
+
+---
+
+## Decided design questions
+
+Settled with rationale and reopen criteria. Tracked here for transparency and to prevent rehashing.
+
+1. **[DECIDED, v0.2] Second-opinion subagent type.** Decision: **Plan-type only**, per `skills/skill-reviewer/reference/second-opinion.md:36`. Considered alternatives: Explore-type (read-only, faster), general-purpose (more flexible). Plan-type chosen because it can read files independently AND produce structured challenge reports, which Explore alone cannot. **Reopen criteria:** evidence that Plan-type produces consistently miscalibrated challenger reports for specific skill shapes (e.g., single-file skills where the protocol is overkill).
 
 ---
 
