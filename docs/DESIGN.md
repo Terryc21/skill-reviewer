@@ -47,7 +47,7 @@ Both are useful and may justify a `tests/` directory later. Until then, the vali
 
 A self-review (running `/skill-reviewer review` on skill-reviewer itself) is **healthy** if all of:
 
-1. Every CRITICAL and HIGH finding it surfaces is **already named** in `## Open design questions` below, OR is a structural drift the reviewer can fix in one commit (a dangling reference, a sub-command-table mismatch, a section that exists in one file but is referenced from another).
+1. Every CRITICAL and HIGH finding it surfaces is **already named** in `## Open design questions` below, OR is a **drift-class fix** — an edit that touches ≤3 files, adds no new directory, removes no existing surface, and breaks no public contract. Drift-class shapes include: a dangling reference, a subcommand-table mismatch, a section that exists in one file but is referenced from another, a cross-file citation that has gone stale, or a description string that has drifted between manifest copies. Anything wider (new subcommand, new directory, schema change, surface removal) does NOT qualify and must be moved into `## Open design questions` with a target version before release.
 2. MEDIUM and LOW findings can be deferred; surfacing them is informational, not blocking.
 3. The reviewer can fill in `## Files referenced` cleanly — every file cited in the report exists at the cited path.
 

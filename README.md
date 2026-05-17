@@ -188,7 +188,19 @@ Things this skill **won't** accept:
 
 ## Maturity
 
-v0.3.0. Card-format release. Open questions and v0.4+ candidates documented in `docs/DESIGN.md`.
+v0.3.1 (May 2026). Five releases in the v0.x line; the skill self-reviews after each meaningful edit and the v0.3.0 self-review surfaced findings that landed in v0.3.1.
+
+**Validated shape.** Plugin-shape and thin-index skills authored by this author (`unforget`, `bug-echo`, `prompter`, `tutorial-creator`, `radar-suite`). The plugin-shape sample report at `skills/skill-reviewer/examples/sample-report-unforget.md` is the canonical reference.
+
+**Less-tested shapes.** Single-file skills (no canonical example yet), skills with substantial helper scripts (no canonical example yet), non-Anthropic skills (no review history), multi-author repos.
+
+**v1.0 gates.**
+
+1. A canonical thin-index sample report exists alongside the plugin-shape one (currently only plugin-shape has a sample, which means the card-format target word budgets for thin-index/single-file are theoretical).
+2. A decision is made on `Open design question #2` — whether `detect` emits machine-readable JSON for CI integration. v1.0 either ships the option or removes the question.
+3. Two consecutive self-reviews complete with zero CRITICAL or HIGH findings unnamed in `docs/DESIGN.md § Open design questions`.
+
+Open questions and v0.4+ candidates documented in `docs/DESIGN.md`.
 
 ## Support the work
 
