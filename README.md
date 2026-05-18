@@ -1,19 +1,27 @@
 # skill-reviewer
 
-[![Version](https://img.shields.io/badge/version-0.3.0-blue.svg)](https://github.com/Terryc21/skill-reviewer/releases)
-[![License](https://img.shields.io/badge/license-Apache--2.0-green.svg)](LICENSE)
-[![Claude Code](https://img.shields.io/badge/Claude%20Code-plugin-orange.svg)](https://docs.anthropic.com/en/docs/claude-code/skills)
-[![GitHub stars](https://img.shields.io/github/stars/Terryc21/skill-reviewer?style=social)](https://github.com/Terryc21/skill-reviewer/stargazers)
+![Version](https://img.shields.io/github/v/tag/Terryc21/skill-reviewer?label=version) ![Last commit](https://img.shields.io/github/last-commit/Terryc21/skill-reviewer) ![Stars](https://img.shields.io/github/stars/Terryc21/skill-reviewer?style=flat) ![Issues](https://img.shields.io/github/issues/Terryc21/skill-reviewer) ![License](https://img.shields.io/github/license/Terryc21/skill-reviewer) ![Claude Code Plugin](https://img.shields.io/badge/Claude%20Code-Plugin-blueviolet)
 
 > **Based on Anthropic's [Claude Code Skills architecture](https://docs.anthropic.com/en/docs/claude-code/skills). A reviewer for the skills you write on that foundation.**
 
-You built a skill. You want feedback. You ask a friend.
+You built a skill. You want feedback. You ask a friend. Your friend says: "Looks great! Maybe consider adding tests?" That's not a review. That's a hug.
 
-Your friend says: "Looks great! Maybe consider adding tests?"
+`skill-reviewer` reads every file, cites specific lines, and separates strengths from weaknesses with severity-rated finding cards. It refuses to hedge: if something is fragile, it'll say so; if something is unusually well-done, it'll say that too.
 
-That's not a review. That's a hug.
+*~4 min read · scan the TL;DR if you only have 30 seconds*
 
-`skill-reviewer` is a Claude Code skill that reviews other skills the way you'd want them reviewed if shipping mattered. It reads every file, cites specific lines, and separates strengths from weaknesses. (You need both. Reviews that only list problems tell you what to change but not what to keep.) Each finding lands in its own card with severity, effort, and quick-win tag, so you can pick the low-cost-high-leverage fixes first. It refuses to hedge: if something is fragile, it'll say so. If something is unusually well-done, it'll say that too.
+## TL;DR
+
+- **What:** A Claude Code skill that reviews other Claude Code skills with file:line citations, severity-rated finding cards, and an optional second-opinion challenger pass.
+- **Why:** Polite-by-default feedback ships skills with quiet flaws. skill-reviewer gives you the candid review you'd want before publishing.
+- **Install:** Two `/plugin` commands in Claude Code (below); then `/skill-reviewer` is available in any session.
+- **Try first:** `/skill-reviewer summary /path/to/some-skill` — 5-minute sanity check (TL;DR + top 5 strengths + top 5 weaknesses). Lighter than a full review.
+- **Example output:** [a real review of the `unforget` skill](skills/skill-reviewer/examples/sample-report-unforget.md).
+- **Maturity:** v0.3.1; five releases in the v0.x line; self-reviews after every meaningful edit.
+
+## Newer to Claude Code?
+
+A **skill** is a markdown file Claude Code knows how to run. When you type `/skill-reviewer review <path>`, Claude follows the instructions in this skill, reads the target skill's files, and writes you a structured report. You don't have to memorize anything — the skill tells Claude what to do, you read the report.
 
 ## A real fragment
 
@@ -56,7 +64,12 @@ Wait for "Successfully added marketplace," then:
 
 Verify with `/skill-reviewer --version`. You should see three lines: version, install path, and the list of available lenses.
 
-**How invocation works.** The plugin registers `/skill-reviewer` as a single skill activation. Claude parses everything after it as a subcommand string — `review <path>`, `summary <path>`, `lenses`, `detect <path>`, `--version`. The subcommands listed throughout this README are recognized argument shapes, not separately-registered slash commands. There is no per-subcommand autocomplete; typing `/skill-reviewer ` and pressing Tab won't enumerate `review` / `summary` / `lenses` for you. (Tab will offer `/skill-reviewer` itself once the plugin is installed.)
+<details>
+<summary><strong>How invocation works (autocomplete caveat)</strong></summary>
+
+The plugin registers `/skill-reviewer` as a single skill activation. Claude parses everything after it as a subcommand string — `review <path>`, `summary <path>`, `lenses`, `detect <path>`, `--version`. The subcommands listed throughout this README are recognized argument shapes, not separately-registered slash commands. There is no per-subcommand autocomplete; typing `/skill-reviewer ` and pressing Tab won't enumerate `review` / `summary` / `lenses` for you. (Tab will offer `/skill-reviewer` itself once the plugin is installed.)
+
+</details>
 
 <details>
 <summary><strong>Manual install if the plugin path isn't available</strong></summary>
@@ -89,6 +102,20 @@ If you want a 5-minute sanity check instead of the full audit:
 ```
 
 That gives you the headline verdict, 3-5 strengths, up to 5 finding cards, and a one-line next step. Roughly 500-800 words. Useful when you're deciding whether to commit to a full review or just spot-check.
+
+## Scoping a run
+
+skill-reviewer scopes by **the directory path you pass**. There's no fresh-vs-resume mode — every review is a fresh read of the skill's files at the path. Prior reports live in `.agents/research/` and can be cited by hand, but the skill doesn't auto-load them.
+
+| Goal | Command |
+|---|---|
+| Review one whole skill | `/skill-reviewer review /path/to/some-skill` |
+| Spot-check before committing to a full review | `/skill-reviewer summary /path/to/some-skill` |
+| Focus on one concern | `/skill-reviewer review /path/to/some-skill --lens=safety` |
+| Higher-stakes pre-publish review | `/skill-reviewer review /path/to/some-skill --second-opinion` |
+| Just classify the skill's shape and recommended depth | `/skill-reviewer detect /path/to/some-skill` |
+
+The skill always reads the live files at the path you give it. If you want a "diff against last time" view, compare two reports manually — that's a deliberate choice, not a missing feature. Re-running fresh keeps each review independent of prior verdicts that may now be stale.
 
 ## When you'd use this
 
@@ -138,30 +165,6 @@ That runs the full review, then dispatches an independent reviewer to challenge 
 - **It doesn't compare to a "best skill" template.** Skills have legitimate stylistic variation. Imposing uniformity is worse than the variation it removes.
 - **It doesn't chain three reviewers.** `--second-opinion` is one challenger. Three reviewers don't add proportional value; if the first pair strongly disagrees, that's signal you need a human tiebreaker, not another LLM.
 
-## How it works with sibling skills
-
-- **[`unforget`](https://github.com/Terryc21/unforget)**: log deferred findings from a review as rows in your project's UNFORGET.md so they don't get lost between releases.
-- **[`radar-suite`](https://github.com/Terryc21/radar-suite)**: if you're auditing a skill that wraps radar-suite output, the formats interoperate.
-- **[`bug-echo`](https://github.com/Terryc21/bug-echo)**: after fixing one finding, sweep for similar patterns elsewhere in the same skill.
-
-## Other skills by the same author
-
-No direct integration with skill-reviewer, but worth knowing about if you're building skills:
-
-- **[`prompter`](https://github.com/Terryc21/prompter)**: intercepts your prompts before Claude Code acts on them, evaluates whether rewriting would meaningfully improve them, and shows you the rewrite for approval. Over time it teaches you what makes prompts effective.
-- **[`tutorial-creator`](https://github.com/Terryc21/tutorial-creator)**: generate annotated code-reading tutorials from your own codebase. Three surfaces (tutorial generation, vocabulary management, learning-state inspection). Useful for writing-to-learn or producing audience-facing technical content.
-- **[`workflow-audit`](https://github.com/Terryc21/workflow-audit)**: multi-layer behavioral audit of SwiftUI user workflows. Finds dead ends, broken promises, missing empty/loading/error states, and other UX defects that grep-style audits miss.
-
-## Self-review
-
-The skill can audit itself, which is the kind of self-aware feature most tools avoid because it sometimes lands honestly:
-
-```
-/skill-reviewer review /Volumes/2 TB Drive/Coding/GitHub/skill-reviewer
-```
-
-A healthy self-review surfaces findings already named in `docs/DESIGN.md` § Open design questions (those are known gaps) plus possibly new MEDIUM/LOW findings. A new CRITICAL or HIGH finding *not* in known-gaps blocks the next release until it's resolved or moved into known-gaps with a target version. Run this after any meaningful edit to the reference files.
-
 ## Origin
 
 `skill-reviewer` was extracted from a real Claude Code session: the user asked Claude to review the `unforget` skill, Claude produced a detailed candid review, the user asked for the same analysis as a reusable prompt, then asked to turn the prompt into a skill. Each step generated something useful; the final step turned implicit knowledge into a reusable tool. The original review is preserved at [`skills/skill-reviewer/examples/sample-report-unforget.md`](skills/skill-reviewer/examples/sample-report-unforget.md).
@@ -188,25 +191,29 @@ Things this skill **won't** accept:
 
 ## Maturity
 
-v0.3.1 (May 2026). Five releases in the v0.x line; the skill self-reviews after each meaningful edit and the v0.3.0 self-review surfaced findings that landed in v0.3.1.
+v0.3.1 (May 2026). Five releases in the v0.x line; the skill self-reviews after each meaningful edit.
 
 **Validated shape.** Plugin-shape and thin-index skills authored by this author (`unforget`, `bug-echo`, `prompter`, `tutorial-creator`, `radar-suite`). The plugin-shape sample report at `skills/skill-reviewer/examples/sample-report-unforget.md` is the canonical reference.
 
 **Less-tested shapes.** Single-file skills (no canonical example yet), skills with substantial helper scripts (no canonical example yet), non-Anthropic skills (no review history), multi-author repos.
 
-**v1.0 gates.**
+**Self-review** — run `/skill-reviewer review /path/to/skill-reviewer` against this repo after meaningful edits. **v1.0 gates and open design questions** — see [`docs/DESIGN.md`](docs/DESIGN.md).
 
-1. A canonical thin-index sample report exists alongside the plugin-shape one (currently only plugin-shape has a sample, which means the card-format target word budgets for thin-index/single-file are theoretical).
-2. A decision is made on `Open design question #2` — whether `detect` emits machine-readable JSON for CI integration. v1.0 either ships the option or removes the question.
-3. Two consecutive self-reviews complete with zero CRITICAL or HIGH findings unnamed in `docs/DESIGN.md § Open design questions`.
+## Sibling skills
 
-Open questions and v0.4+ candidates documented in `docs/DESIGN.md`.
+- [**bug-echo**](https://github.com/Terryc21/bug-echo) — sibling-bug scan after a fix
+- [**bug-prospector**](https://github.com/Terryc21/bug-prospector) — forward-looking bug hunt before a release
+- [**workflow-audit**](https://github.com/Terryc21/workflow-audit) — 5-layer SwiftUI flow audit
+- [**unforget**](https://github.com/Terryc21/unforget) — one-file deferred-work ledger
+- [**radar-suite**](https://github.com/Terryc21/radar-suite) — 6-skill iOS audit family
+- [**prompter**](https://github.com/Terryc21/prompter) — prompt rewriting before execution
+- [**tutorial-creator**](https://github.com/Terryc21/tutorial-creator) — annotated tutorials from your codebase
 
-## Support the work
+## Author
 
-If `skill-reviewer` has saved you from shipping a skill with quiet flaws, consider buying me a coffee. No pressure, no obligation, no paywall on the skill itself.
+Terry Nyberg, [Coffee & Code LLC](https://stuffolio.app/). If `skill-reviewer` has saved you from shipping a skill with quiet flaws, [a coffee](https://buymeacoffee.com/stuffolio) is appreciated. Issue reports about what worked or didn't are more useful.
 
-[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-FFDD00?style=flat&logo=buy-me-a-coffee&logoColor=black)](https://www.buymeacoffee.com/terryc21)
+[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-FFDD00?style=flat&logo=buy-me-a-coffee&logoColor=black)](https://www.buymeacoffee.com/stuffolio)
 
 ## License
 
