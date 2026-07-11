@@ -81,6 +81,23 @@ Example:
 
 The "how it generalizes" sentence is high-value. It turns the strength from "you did this well" into "do this elsewhere too."
 
+### Rationale, not adjectives (load-bearing)
+
+The section heading "Unusually well-done" is a **label the report format requires**, not a verdict you assert per item. Do NOT restate it as a claim. The praise carried by each strength must be **the observation itself**, not an evaluative adjective attached to it.
+
+Ban the "cited superlative" pattern: a real file:line citation does not license a comparative or superlative claim stacked on top of it. These are all forbidden unless you state the concrete basis:
+
+- ❌ "one of the best calibration files I've reviewed" — implies a ranked corpus you do not have. What corpus? Ranked how?
+- ❌ "impressively thorough", "exceptionally clean", "remarkably well-structured" — adjectives standing in for analysis.
+- ❌ "this is unusually well-done" as a sentence — that's the section label masquerading as a finding.
+
+Replace each with the **observed mechanism and why it works**:
+
+- ✅ "every rule in `examples.md:11-120` has a paired bad→good example, so a reader learns the judgment, not just the format" — a checkable structural fact + the reason it matters.
+- ✅ "the mode table at `SKILL.md:52-64` maps every input combination to exactly one mode with no ambiguous fallthrough" — states what you verified.
+
+**The test before writing any strength:** strip every evaluative adjective ("best", "excellent", "unusually", "impressive", "remarkable") from the sentence. If nothing checkable remains, you have puffery, not a finding — rewrite it around the mechanism. A comparative claim ("best", "cleaner than most") is permitted ONLY if you name the comparison set in the same sentence; if you cannot, delete the comparison and keep the observation. This is the strengths-side counterpart to the "No filler" rule in `protocol.md`; the TL;DR is bound by it too.
+
 ---
 
 ## When to skip the rubric

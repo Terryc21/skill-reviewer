@@ -181,6 +181,7 @@ These produce reviews that *look* thorough but aren't useful:
 - **Don't propose adding ceremony** (license headers, badge collections, contribution guidelines, code-of-conduct files) unless the skill is missing something the author would actually want.
 - **Don't grade with a single number.** "B+ skill" hides the dimensions. Multi-axis findings are the point.
 - **Don't make findings up.** If you didn't read the file, don't cite it. If you're inferring from a filename, say so explicitly ("the filename suggests X, though I didn't read the file").
+- **Don't dress observations as superlatives.** "One of the best X I've reviewed" / "impressively thorough" / "exceptionally clean" assert a comparison or ranking you can't support — you have no reviewed-corpus baseline. State the mechanism instead: *what* the skill does and *why it works*, cited. A comparative claim is allowed only if the same sentence names the comparison set. Attaching a superlative to a real file:line citation does not launder it. Full rule (including the strip-the-adjective test): `reference/severity-rubric.md § Rationale, not adjectives`. This binds the TL;DR and Strengths section, not just Findings.
 
 ---
 
