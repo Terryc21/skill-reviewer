@@ -17,7 +17,7 @@ You built a skill. You want feedback. You ask a friend. Your friend says: "Looks
 - **Install:** Two `/plugin` commands in Claude Code (below); then `/skill-reviewer` is available in any session.
 - **Try first:** `/skill-reviewer summary /path/to/some-skill` — 5-minute sanity check (TL;DR + top 5 strengths + top 5 weaknesses). Lighter than a full review.
 - **Example output:** [a real review of the `unforget` skill](skills/skill-reviewer/examples/sample-report-unforget.md).
-- **Maturity:** v0.3.1; five releases in the v0.x line; self-reviews after every meaningful edit.
+- **Maturity:** v0.3.0; five releases so far; the skill reviews itself after every meaningful edit.
 
 ## Newer to Claude Code?
 
@@ -178,7 +178,7 @@ Pull requests welcome for:
 - Additional lens variants (with focus + skip lists per the spec in `docs/DESIGN.md`)
 - Refinements to the severity rubric (effort buckets, quick-win tag rules)
 - New cross-file checks worth standardizing
-- Canonical examples for single-file and thin-index shapes (the only existing example is plugin-shape)
+- Example reviews of skills built as a single file, or as a short index (the only example so far is a plugin)
 
 Things this skill **won't** accept:
 
@@ -189,25 +189,25 @@ Things this skill **won't** accept:
 
 `docs/DESIGN.md` has the full contributor guide, including the cross-file invariants you need to respect when editing reference files.
 
-## Maturity
+## Where it stands
 
-v0.3.1 (May 2026). Five releases in the v0.x line; the skill self-reviews after each meaningful edit.
+v0.3.0 (May 2026). Five releases so far; the skill reviews itself after each meaningful edit.
 
-**Validated shape.** Plugin-shape and thin-index skills authored by this author (`unforget`, `bug-echo`, `prompter`, `tutorial-creator`, `radar-suite`). The plugin-shape sample report at `skills/skill-reviewer/examples/sample-report-unforget.md` is the canonical reference.
+**Well tested on.** Skills built as plugins, and skills whose main file is a short index pointing at other files — my own (`unforget`, `bug-echo`, `prompter`, `tutorial-creator`, `radar-suite`). The sample report at `skills/skill-reviewer/examples/sample-report-unforget.md` is the reference example.
 
-**Less-tested shapes.** Single-file skills (no canonical example yet), skills with substantial helper scripts (no canonical example yet), non-Anthropic skills (no review history), multi-author repos.
+**Less tested on.** Skills that are one file, and skills with a lot of helper scripts — no example of either yet. Skills by other authors, and repos with several authors, have no review history at all.
 
 **Self-review** — run `/skill-reviewer review /path/to/skill-reviewer` against this repo after meaningful edits. **v1.0 gates and open design questions** — see [`docs/DESIGN.md`](docs/DESIGN.md).
 
-## Sibling skills
+## Related skills
 
-- [**bug-echo**](https://github.com/Terryc21/bug-echo) — sibling-bug scan after a fix
-- [**bug-prospector**](https://github.com/Terryc21/bug-prospector) — forward-looking bug hunt before a release
-- [**workflow-audit**](https://github.com/Terryc21/workflow-audit) — 5-layer SwiftUI behavioral flow audit
-- [**unforget**](https://github.com/Terryc21/unforget) — one-file deferred-work ledger
-- [**radar-suite**](https://github.com/Terryc21/radar-suite) — 6-skill suite tracing user behavior paths through the app (iOS + macOS)
-- [**prompter**](https://github.com/Terryc21/prompter) — prompt rewriting before execution
-- [**tutorial-creator**](https://github.com/Terryc21/tutorial-creator) — annotated tutorials from your codebase
+[**bug-echo**](https://github.com/Terryc21/bug-echo) — find the same bug elsewhere after a fix ·
+[**bug-prospector**](https://github.com/Terryc21/bug-prospector) — hunt for bugs before a release ·
+[**workflow-audit**](https://github.com/Terryc21/workflow-audit) — trace SwiftUI behaviour ·
+[**unforget**](https://github.com/Terryc21/unforget) — one file for everything you deferred ·
+[**radar-suite**](https://github.com/Terryc21/radar-suite) — six skills tracing user paths ·
+[**prompter**](https://github.com/Terryc21/prompter) — rewrite prompts before running them ·
+[**tutorial-creator**](https://github.com/Terryc21/tutorial-creator) — lessons from your own code
 
 ## Author
 
