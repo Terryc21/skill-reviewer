@@ -15,7 +15,13 @@ Use color emojis FIRST, then the label. Hybrid format scans well and carries pre
 | 🟢 | **MEDIUM** | Clarity, redundancy, or polish issue. Worth fixing but not urgent. Bundle with the next round of edits. |
 | ⚪ | **LOW** | Nit, micro-inconsistency, or style observation. Skip if low on time. |
 
-**Positive / pass indicator:** 🟠 (used for strengths and status="passing" rows, NOT for severity). This matches the user's established convention.
+**Positive / pass indicator:** 🟣 (used for strengths and status="passing" rows, NOT for severity).
+
+🛑 **Purple, specifically — do not "correct" it back to orange or green.** Strengths sit next to 🟢 MEDIUM in every report, and a reader with red-green colour blindness cannot tell 🟢 from 🟠: the two are adjacent on the confusion axis. Purple is on the blue-yellow axis and separates from green under both deuteranopia and protanopia.
+
+This was found the way these things usually are — a reader said "I can't discriminate between the polish and strength colours." The earlier rubric used 🟠 and justified it as matching the user's established palette convention, which was half-right: that convention names orange as the positive indicator AND forbids pairing indistinguishable hues on one surface. Only the first half got applied.
+
+**When adding any new indicator, check it against every indicator it can appear beside**, not just against the one it replaces. A legend is the worst case: every colour in the scale renders on one line, inches apart.
 
 ---
 
@@ -41,7 +47,7 @@ Severity colors, effort buckets, and quick-win tags appear inside each finding c
 
 with severity emoji and rank in the card heading. Card sort order: severity (🔴 first) → quick-win (✅ first within the same severity) → file path (alphabetical within ties).
 
-Strengths use 🟠 (positive indicator, not severity) and live in their own section above Findings — see `reference/output-format.md § 2. Strengths to keep` for the full format.
+Strengths use 🟣 (positive indicator, not severity) and live in their own section above Findings — see `reference/output-format.md § 2. Strengths to keep` for the full format.
 
 ---
 
@@ -69,7 +75,7 @@ Non-examples (NOT quick wins even if small):
 
 ## Strength signals
 
-Strengths use 🟠. List 5-10 per report under "Unusually well-done — keep doing these." Each strength gets:
+Strengths use 🟣. List 5-10 per report under "Unusually well-done — keep doing these." Each strength gets:
 
 - One sentence describing what's well-done
 - file:line citation
@@ -77,7 +83,7 @@ Strengths use 🟠. List 5-10 per report under "Unusually well-done — keep doi
 
 Example:
 
-> 🟠 **Verify-still-open recipe** (`format.md:73-95`) — treats row staleness as a first-class concern with a 10-second grep recipe. Generalize this to other skills: every claim about file state should have a re-verification command.
+> 🟣 **Verify-still-open recipe** (`format.md:73-95`) — treats row staleness as a first-class concern with a 10-second grep recipe. Generalize this to other skills: every claim about file state should have a re-verification command.
 
 The "how it generalizes" sentence is high-value. It turns the strength from "you did this well" into "do this elsewhere too."
 
@@ -105,6 +111,6 @@ Replace each with the **observed mechanism and why it works**:
 Two exceptions where the severity rubric does NOT apply:
 
 1. **`quick` lens reports** — under v0.3, the quick lens still produces cards but capped at 5. The rubric applies the same way; the cap is the only difference.
-2. **Pure narrative findings** (e.g., "the README's voice is clear and confident") — these go in the TL;DR or the Strengths section, not the Findings cards. Strengths use 🟠 and don't carry severity/effort fields.
+2. **Pure narrative findings** (e.g., "the README's voice is clear and confident") — these go in the TL;DR or the Strengths section, not the Findings cards. Strengths use 🟣 and don't carry severity/effort fields.
 
 Otherwise every finding gets a severity color, an effort estimate, and its own card in the Findings section.

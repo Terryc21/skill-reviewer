@@ -74,13 +74,13 @@ This warning takes precedence over the second-opinion banner. If both apply, lea
 Per-item format:
 
 ```
-- 🟠 **<Strength title>** (`<file>:<line>`) — <one-sentence description>.
+- 🟣 **<Strength title>** (`<file>:<line>`) — <one-sentence description>.
   *Generalizes:* <one-sentence note on how this pattern would apply to other skills>
 ```
 
 The `Generalizes:` clause is optional but high-value. It turns the strength from "you did this well" into "do this elsewhere too" and is often the most-quoted line in author follow-ups.
 
-Strengths use 🟠 (positive indicator, not severity).
+Strengths use 🟣 (positive indicator, not severity).
 
 ### 3. Findings
 
@@ -155,7 +155,7 @@ The specific-recommendation clause should name the highest-leverage action from 
 After the Next step, append the severity legend as a single-line footer:
 
 ```
-*Severity legend: 🔴 fix before publishing · 🟡 fix before next release · 🟢 polish · ⚪ skip · 🟠 strength*
+*Severity legend: 🔴 fix before publishing · 🟡 fix before next release · 🟢 polish · ⚪ skip · 🟣 strength*
 ```
 
 ---

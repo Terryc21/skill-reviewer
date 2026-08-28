@@ -18,7 +18,7 @@ The default behavior is unchanged: existing reports stay diagnostic and short. A
 
 ## What this amendment does NOT change
 
-- Severity rubric (🔴 / 🔵 / 🟢 / ⚪ / 🟠) — unchanged
+- Severity rubric (🔴 / 🔵 / 🟢 / ⚪ / 🟣) — unchanged
 - Findings table (Recommended Actions) — unchanged shape; just gets richer per-row content under `--with-fixes`
 - Quick-win rules — unchanged
 - Strength signals — unchanged (strengths never get proposed fixes; they're observations, not directives)

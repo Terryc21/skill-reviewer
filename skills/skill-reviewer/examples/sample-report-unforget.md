@@ -25,16 +25,16 @@ Read this to see how cards work in practice. Your own reports won't be identical
 
 ## Strengths to keep
 
-- 🟠 **Verify-still-open recipe** (`format.md:73-95`) — treats row staleness as a first-class concern with a 10-second grep recipe before acting on a row. *Generalizes:* every claim about file state should have a re-verification command attached.
-- 🟠 **Conservative-defaults contract** (`init.md:139-152`) — pinned identical defaults across implementations removes a class of "Python and prose-fallback disagreed" bugs. *Generalizes:* when multiple implementations of the same algorithm exist, pin their tunable values in one place both consume.
-- 🟠 **Post-fix-sweep workflow** (`promotion.md:7-50`) — three-skill chain (surface → verify → generalize) with a worked example and a 60-90 minute time estimate. *Generalizes:* compose skills explicitly with role-named stages rather than treating "use these together" as implicit.
-- 🟠 **Spec-substitution principle** (`SKILL.md:101`) — named architectural rule: SKILL.md is the index, reference files are authoritative, read them before acting. *Generalizes:* thin-index architectures rot without an explicit anti-monolith rule.
-- 🟠 **Empty-case reframing** (`init.md:101-105`) — reframes "scan found zero results" as a successful run, not a failure. Most scanners default to "did I do enough?" anxiety; flipping the framing is a small UX win.
-- 🟠 **Honest maturity callout** (`README.md:64-71`) — "works for one project shape (Stuffolio), needs feedback from others" builds trust without underselling. *Generalizes:* in skill READMEs, naming the shape you've actually validated beats claiming universal applicability.
-- 🟠 **Format-version contract with read-only fallback** (`SKILL.md:138-146`) — handles three cases (absent / supported / future) with read-only fallback for unknown future versions. *Generalizes:* every persistent-format skill needs this; forward-compat without it is a future-self trap.
-- 🟠 **Backup rotation** (`promotion.md:85-101`) — 5-deep retention, lexicographically sortable filenames, `.gitignore` recommendation. *Generalizes:* destructive operations need a recovery shape, not just a recovery procedure.
-- 🟠 **Decision flowchart** (`SKILL.md:74-84`) — "which subcommand do I run?" table that answers the question before the user asks. *Generalizes:* every multi-subcommand skill should have one.
-- 🟠 **Single source of truth for `AUDIT_FILENAME_RE`** (`scan_surfaces.py:94`) — consolidated regex used by both Surface 2 and Surface 1b. *Generalizes:* when two callers share a regex, extract it; drift is silent and expensive.
+- 🟣 **Verify-still-open recipe** (`format.md:73-95`) — treats row staleness as a first-class concern with a 10-second grep recipe before acting on a row. *Generalizes:* every claim about file state should have a re-verification command attached.
+- 🟣 **Conservative-defaults contract** (`init.md:139-152`) — pinned identical defaults across implementations removes a class of "Python and prose-fallback disagreed" bugs. *Generalizes:* when multiple implementations of the same algorithm exist, pin their tunable values in one place both consume.
+- 🟣 **Post-fix-sweep workflow** (`promotion.md:7-50`) — three-skill chain (surface → verify → generalize) with a worked example and a 60-90 minute time estimate. *Generalizes:* compose skills explicitly with role-named stages rather than treating "use these together" as implicit.
+- 🟣 **Spec-substitution principle** (`SKILL.md:101`) — named architectural rule: SKILL.md is the index, reference files are authoritative, read them before acting. *Generalizes:* thin-index architectures rot without an explicit anti-monolith rule.
+- 🟣 **Empty-case reframing** (`init.md:101-105`) — reframes "scan found zero results" as a successful run, not a failure. Most scanners default to "did I do enough?" anxiety; flipping the framing is a small UX win.
+- 🟣 **Honest maturity callout** (`README.md:64-71`) — "works for one project shape (Stuffolio), needs feedback from others" builds trust without underselling. *Generalizes:* in skill READMEs, naming the shape you've actually validated beats claiming universal applicability.
+- 🟣 **Format-version contract with read-only fallback** (`SKILL.md:138-146`) — handles three cases (absent / supported / future) with read-only fallback for unknown future versions. *Generalizes:* every persistent-format skill needs this; forward-compat without it is a future-self trap.
+- 🟣 **Backup rotation** (`promotion.md:85-101`) — 5-deep retention, lexicographically sortable filenames, `.gitignore` recommendation. *Generalizes:* destructive operations need a recovery shape, not just a recovery procedure.
+- 🟣 **Decision flowchart** (`SKILL.md:74-84`) — "which subcommand do I run?" table that answers the question before the user asks. *Generalizes:* every multi-subcommand skill should have one.
+- 🟣 **Single source of truth for `AUDIT_FILENAME_RE`** (`scan_surfaces.py:94`) — consolidated regex used by both Surface 2 and Surface 1b. *Generalizes:* when two callers share a regex, extract it; drift is silent and expensive.
 
 ---
 
@@ -119,4 +119,4 @@ Read this to see how cards work in practice. Your own reports won't be identical
 
 **Next step:** start with #1 (canonical example demonstrates verify-still-open) and #3 (verb-first description). #1 makes the project's signature feature visible to new users; #3 likely improves routing match rate. Then batch #2 + #4 + #5 + #6 + #9 + #10 into a single "specs polish" commit. The two test-infrastructure findings (#7, #8) and the repair-or-docs decision (#12) deserve their own session. Re-run skill-reviewer after the wave, watch the finding count drop. That's the loop.
 
-*Severity legend: 🔴 fix before publishing · 🟡 fix before next release · 🟢 polish · ⚪ skip · 🟠 strength*
+*Severity legend: 🔴 fix before publishing · 🟡 fix before next release · 🟢 polish · ⚪ skip · 🟣 strength*

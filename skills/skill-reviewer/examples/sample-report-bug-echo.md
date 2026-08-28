@@ -24,12 +24,12 @@ Read this alongside `sample-report-unforget.md` to see two contrasts in one set 
 
 ## Strengths to keep
 
-- 🟠 **Pattern self-validation against pre-fix file** (`SKILL.md:125-142`) — the inferred regex must match the pre-fix file or the skill aborts. Prevents the "scanning with a bad pattern produces nonsense findings" failure mode that catalog-based linters can't avoid. *Generalizes:* any tool that constructs its own query should validate the query against known-positive input before running.
-- 🟠 **"Surface → verify → generalize" workflow position** (`SKILL.md:22-28`, `README.md:207-219`) — bug-echo is explicitly the third stage, with unforget and radar-suite as the prior two. *Generalizes:* skills compose better when each one names the stage it occupies rather than claiming to be a universal entry point.
-- 🟠 **Rename detection in self-validation** (`SKILL.md:131`) — handles `git log --follow --name-status -1` for renamed files. *Generalizes:* git-aware tools that consult HEAD~1 must handle renames or they silently fail on real diffs.
-- 🟠 **Linter complementarity framed honestly** (`README.md:22-39`) — "linters catch what bug-echo would never run for; bug-echo catches what your linter has no rule for." Resists positioning as a replacement. *Generalizes:* tools that overlap with established ones should name the overlap, not paper over it.
-- 🟠 **Commit-message back-references report** (`SKILL.md:303-307`) — `bug-echo: applied N fixes from <slug> report` makes the commit cite the report file path. *Generalizes:* automation-generated commits should cite the artifact they came from so future archaeology works.
-- 🟠 **Honest-limits section names what it can't catch** (`README.md:196-205`) — cross-context mutations, race conditions, high-false-positive patterns, fix-without-shape. *Generalizes:* tools that name their specific limits are trusted more than tools that don't.
+- 🟣 **Pattern self-validation against pre-fix file** (`SKILL.md:125-142`) — the inferred regex must match the pre-fix file or the skill aborts. Prevents the "scanning with a bad pattern produces nonsense findings" failure mode that catalog-based linters can't avoid. *Generalizes:* any tool that constructs its own query should validate the query against known-positive input before running.
+- 🟣 **"Surface → verify → generalize" workflow position** (`SKILL.md:22-28`, `README.md:207-219`) — bug-echo is explicitly the third stage, with unforget and radar-suite as the prior two. *Generalizes:* skills compose better when each one names the stage it occupies rather than claiming to be a universal entry point.
+- 🟣 **Rename detection in self-validation** (`SKILL.md:131`) — handles `git log --follow --name-status -1` for renamed files. *Generalizes:* git-aware tools that consult HEAD~1 must handle renames or they silently fail on real diffs.
+- 🟣 **Linter complementarity framed honestly** (`README.md:22-39`) — "linters catch what bug-echo would never run for; bug-echo catches what your linter has no rule for." Resists positioning as a replacement. *Generalizes:* tools that overlap with established ones should name the overlap, not paper over it.
+- 🟣 **Commit-message back-references report** (`SKILL.md:303-307`) — `bug-echo: applied N fixes from <slug> report` makes the commit cite the report file path. *Generalizes:* automation-generated commits should cite the artifact they came from so future archaeology works.
+- 🟣 **Honest-limits section names what it can't catch** (`README.md:196-205`) — cross-context mutations, race conditions, high-false-positive patterns, fix-without-shape. *Generalizes:* tools that name their specific limits are trusted more than tools that don't.
 
 ---
 
@@ -89,4 +89,4 @@ Read this alongside `sample-report-unforget.md` to see two contrasts in one set 
 
 **Next step:** batch #1, #2, #3, and #5 into a single "v1.1.2 polish" commit — all four are quick wins targeting documentation drift. Then triage #4 (single-file vs thin-index) in its own session: either write the "Why single-file" rationale or extract the reference files. Re-run skill-reviewer after the wave; the finding count should drop to 1.
 
-*Severity legend: 🔴 fix before publishing · 🟡 fix before next release · 🟢 polish · ⚪ skip · 🟠 strength*
+*Severity legend: 🔴 fix before publishing · 🟡 fix before next release · 🟢 polish · ⚪ skip · 🟣 strength*
