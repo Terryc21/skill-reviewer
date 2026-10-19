@@ -215,6 +215,10 @@ Terry Nyberg, [Coffee & Code LLC](https://stuffolio.app/). If `skill-reviewer` h
 
 [![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-FFDD00?style=flat&logo=buy-me-a-coffee&logoColor=black)](https://www.buymeacoffee.com/stuffolio)
 
+## Privacy
+
+skill-reviewer collects no data of its own. It has no server, no accounts, no telemetry and no analytics, and it sends nothing to its author. It reads the skill files you point it at and shows its review in your session. It does not save files on its own, makes no network requests, and runs no scripts. The optional second-opinion pass uses an additional Claude agent in the same session. Anything it saves stays on your own machine. What you ask it to read is processed by Claude in your own session, under your own Anthropic terms and settings. Anthropic's plugin directory may show the author aggregate install counts; those come from the directory, not from the plugin.
+
 ## License
 
 Apache License 2.0. See [LICENSE](LICENSE).
